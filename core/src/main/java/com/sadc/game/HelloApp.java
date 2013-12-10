@@ -16,6 +16,7 @@ public class HelloApp extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+        //test commit
 //		try {
 //			new FreeTypeFontGenerator(Gdx.files.internal("test.fnt"));
 //		} catch(Exception e) {

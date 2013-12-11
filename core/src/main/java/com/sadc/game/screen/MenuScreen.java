@@ -61,11 +61,12 @@ public class MenuScreen  extends GameScreen{
         boolean p2Down = Gdx.input.isKeyPressed(GameConstants.P2_DOWN);
         boolean p1Enter = Gdx.input.isKeyPressed(GameConstants.P1_B);
         boolean p2Enter = Gdx.input.isKeyPressed(GameConstants.P2_B);
+        boolean exit = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
 
 
-
-
-        if (p1Up || p1Down || p2Up || p2Down || p1Enter || p2Enter){
+        if (exit){
+            Gdx.app.exit();
+        } else if (p1Up || p1Down || p2Up || p2Down || p1Enter || p2Enter){
             switch(selectedMenuItem){
                 case START_SELECTED:
                     if ((p1Up && !oldP1Up) || (p2Up && !oldP2Up)){
@@ -73,7 +74,7 @@ public class MenuScreen  extends GameScreen{
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         creditsHighlighted();
                     } else {
-
+                        //start the game
                     }
                     break;
                 case CREDITS_SELECTED:
@@ -82,7 +83,7 @@ public class MenuScreen  extends GameScreen{
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         exitHighlighted();
                     } else {
-
+                        //show the credits screen
                     }
                     break;
                 case EXIT_SELECTED:
@@ -90,8 +91,8 @@ public class MenuScreen  extends GameScreen{
                         creditsHighlighted();
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         startGameHighlighted();
-                    } else {
-
+                    } else if (p1Enter || p2Enter) {
+                      Gdx.app.exit();
                     }
                     break;
             }

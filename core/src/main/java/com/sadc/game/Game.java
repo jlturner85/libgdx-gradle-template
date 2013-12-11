@@ -32,25 +32,25 @@ public class Game extends com.badlogic.gdx.Game {
         // When the screen is done we change to the
         // next screen. Ideally the screen transitions are handled
         // in the screen itself or in a proper state machine.
-        if (false) {
+        if (currentScreen.isScreenDone()) {
             // dispose the resources of the current screen
             currentScreen.dispose();
-
+            setScreen(currentScreen.getNextGameScreen());
             // if the current screen is a main menu screen we switch to
             // the game loop
-            if (currentScreen instanceof MenuScreen) {
-                setScreen(new GameplayScreen());
-            } else {
+            //if (currentScreen instanceof MenuScreen) {
+                //setScreen(new GameplayScreen());
+            //} else {
                 // if the current screen is a game loop screen we switch to the
                 // game over screen
-                if (currentScreen instanceof GameplayScreen) {
-                    setScreen(new MenuScreen());
-                } //else if (currentScreen instanceof GameOver) {
+                //if (currentScreen instanceof GameplayScreen) {
+                //    setScreen(new MenuScreen());
+                //} //else if (currentScreen instanceof GameOver) {
                     // if the current screen is a game over screen we switch to the
                     // main menu screen
                     //setScreen(new MainMenu());
                 //}
-            }
+            //}
         }
 
         //fps.log();

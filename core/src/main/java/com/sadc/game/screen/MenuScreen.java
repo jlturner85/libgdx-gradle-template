@@ -73,7 +73,7 @@ public class MenuScreen  extends GameScreen{
                         exitHighlighted();
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         creditsHighlighted();
-                    } else {
+                    } else if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
                         //start the game
                     }
                     break;
@@ -82,8 +82,10 @@ public class MenuScreen  extends GameScreen{
                         startGameHighlighted();
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         exitHighlighted();
-                    } else {
+                    } else if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
                         //show the credits screen
+                        this.nextGameScreen = new CreditsScreen();
+                        this.screenDone = true;
                     }
                     break;
                 case EXIT_SELECTED:
@@ -91,7 +93,7 @@ public class MenuScreen  extends GameScreen{
                         creditsHighlighted();
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         startGameHighlighted();
-                    } else if (p1Enter || p2Enter) {
+                    } else if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
                       Gdx.app.exit();
                     }
                     break;
@@ -101,6 +103,8 @@ public class MenuScreen  extends GameScreen{
         oldP1Down = Gdx.input.isKeyPressed(GameConstants.P1_DOWN);
         oldP2Up = Gdx.input.isKeyPressed(GameConstants.P2_UP);
         oldP2Down = Gdx.input.isKeyPressed(GameConstants.P2_DOWN);
+        GameConstants.OLD_P1_ENTER_PRESSED = p1Enter;
+        GameConstants.OLD_P2_ENTER_PRESSED = p2Enter;
     }
 
     @Override

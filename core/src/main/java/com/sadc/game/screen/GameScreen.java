@@ -4,15 +4,25 @@ import com.badlogic.gdx.Screen;
 
 public abstract class GameScreen implements Screen {
 
+
+
     /**
      * Called when the screen should render itself.
      *
      * @param delta The time in seconds since the last render.
      */
+    protected boolean screenDone;
+    protected GameScreen nextGameScreen;
+
+    public GameScreen getNextGameScreen() {
+        return nextGameScreen;
+    }
 
     public abstract void update(float delta);
     public abstract void draw(float delta);
-
+    public boolean isScreenDone() {
+        return screenDone;
+    }
     @Override
     public void render(float delta) {
         //To change body of implemented methods use File | Settings | File Templates.

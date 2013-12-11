@@ -31,5 +31,7 @@ public class GameConstants {
     public static final int P2_START = Keys.NUM_2;
     public static final int P2_EXTRA_BUTTON_1 = Keys.J;
     public static final int P2_EXTRA_BUTTON_2 = Keys.L;
+    public static boolean OLD_P1_ENTER_PRESSED = false;
+    public static boolean OLD_P2_ENTER_PRESSED = false;
 
 }

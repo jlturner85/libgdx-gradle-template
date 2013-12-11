@@ -9,9 +9,15 @@ public abstract class GameScreen implements Screen {
      *
      * @param delta The time in seconds since the last render.
      */
+
+    public abstract void update(float delta);
+    public abstract void draw(float delta);
+
     @Override
     public void render(float delta) {
         //To change body of implemented methods use File | Settings | File Templates.
+        update(delta);
+        draw(delta);
     }
 
     /**

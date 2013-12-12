@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.screen.GameScreen;
 import com.sadc.game.screen.GameplayScreen;
 import com.sadc.game.screen.MenuScreen;
+import com.sadc.game.screen.SplashScreen;
 
 /**
  * Created with IntelliJ IDEA.
@@ -65,7 +66,7 @@ public class Game extends com.badlogic.gdx.Game {
      */
     @Override
     public void create() {
-        setScreen(new MenuScreen());
+        setScreen(new SplashScreen());
         //music = Gdx.audio.newMusic(Gdx.files.getFileHandle("data/8.12.mp3", Files.FileType.Internal));
         //music.setLooping(true);
         //music.play();

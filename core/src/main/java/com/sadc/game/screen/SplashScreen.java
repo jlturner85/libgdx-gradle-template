@@ -12,6 +12,10 @@ public class SplashScreen extends GameScreen {
     private final SpriteBatch spriteBatch;
     private final Texture background;
     public SplashScreen(){
+        if (GameConstants.currentMusic != null){
+            GameConstants.currentMusic.stop();
+            GameConstants.currentMusic.dispose();
+        }
         GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("menu.mp3"));
         long id = GameConstants.currentMusic.play(GameConstants.MUSIC_VOLUME);
         GameConstants.currentMusic.setLooping(id, true);

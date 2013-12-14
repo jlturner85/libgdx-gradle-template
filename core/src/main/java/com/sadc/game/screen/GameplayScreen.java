@@ -33,10 +33,6 @@ public class GameplayScreen extends GameScreen{
         hitSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
     }
 
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-    }
-
     @Override
     public void dispose() {
         spriteBatch.dispose();
@@ -58,16 +54,30 @@ public class GameplayScreen extends GameScreen{
 
         if ((!GameConstants.OLD_ESCAPE_PRESSED) && (Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY))){
             this.gamePaused = true;
+            this.paused = true;
         }
         GameConstants.OLD_ESCAPE_PRESSED = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
     }
 
     @Override
     public void draw(float delta) {
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        spriteBatch.begin();
-        spriteBatch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        track.draw(delta, spriteBatch);
-        spriteBatch.end();
+        if (!paused){
+            Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+            spriteBatch.begin();
+            spriteBatch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            track.draw(delta, spriteBatch);
+            spriteBatch.end();
+        }
     }
+
+    @Override
+    public void pause(){
+        this.paused = true;
+    }
+
+    @Override
+    public void resume(){
+        this.paused = false;
+    }
+
 }

@@ -31,9 +31,13 @@ public abstract class GameScreen implements Screen {
     }
     @Override
     public void render(float delta) {
-        //To change body of implemented methods use File | Settings | File Templates.
-        update(delta);
-        draw(delta);
+        if(gamePaused){
+            updatePause();
+            drawPause();
+        }  else {
+            update(delta);
+            draw(delta);
+        }
     }
 
     /**
@@ -87,16 +91,17 @@ public abstract class GameScreen implements Screen {
 
     public void drawPause(){
         spriteBatch.begin();
-        font.draw(spriteBatch, "Paused", 400, 60);
-        font.draw(spriteBatch, "Return to Menu", 350, 60);
+        font.draw(spriteBatch, "Paused", 60, 450);
+        font.draw(spriteBatch, "Return to Menu", 60, 400);
         spriteBatch.end();
     }
 
     public void updatePause(){
-        if((!GameConstants.OLD_ESCAPE_PRESSED) && (Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY))){
+        if ((!GameConstants.OLD_ESCAPE_PRESSED) && (Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY))){
             gamePaused = false;
+            this.resume();
         }
-        if((!GameConstants.OLD_P1_ENTER_PRESSED) && (Gdx.input.isKeyPressed(GameConstants.P1_B))){
+        if ((!GameConstants.OLD_P1_ENTER_PRESSED) && (Gdx.input.isKeyPressed(GameConstants.P1_B))){
             nextGameScreen = new LoadingScreen("com.sadc.game.screen.SplashScreen");
             screenDone = true;
         }

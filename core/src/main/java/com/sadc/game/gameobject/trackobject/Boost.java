@@ -23,7 +23,7 @@ public class Boost extends TrackObject {
         setActive(true);
         setDistance(distance);
         setAngle(angle);
-        setWidth(20);
+        setWidth(15);
         setTexture(new Texture("boostpanel.png"));
     }
 

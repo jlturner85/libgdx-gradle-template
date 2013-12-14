@@ -95,4 +95,8 @@ public class Track {
         player.draw(delta, spriteBatch);
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
 }

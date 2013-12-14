@@ -41,6 +41,7 @@ public class Player {
     private float angle;
     private float spin;
     private float boost;
+    private float dBoost;
 
     private int leftKey;
     private int rightKey;
@@ -53,10 +54,11 @@ public class Player {
         distance = 0;
         speed = 0;
         topSpeed = 5;
-        acceleration = 0.003f;
+        acceleration = 0.002f;
         angle = 0;
         spin = 0;
         boost = 1;
+        dBoost = 0;
 
         if (playerNum == 1) {
             leftKey = GameConstants.P1_LEFT;
@@ -79,9 +81,10 @@ public class Player {
     }
 
     public void boost() {
-        System.out.println("BOOST!");
-        boost = GameConstants.BOOST;
-        speed += 0.5f;
+        if (boost <= 1) {
+            boost = GameConstants.BOOST;
+        }
+        dBoost = GameConstants.D_BOOST;
     }
 
     public void dispose() {
@@ -94,14 +97,15 @@ public class Player {
     }
 
     public void update(float delta) {
-        speed += boost * acceleration * ((topSpeed * boost) - speed);
-        //System.out.println(speed);
+        speed += acceleration * Math.max(1, speed / topSpeed) * ((topSpeed * boost) - speed);
         distance += speed / 60f;
 
+        dBoost += GameConstants.D_D_BOOST;
         if (boost > 1) {
-            boost -= 0.25f;
+            boost += dBoost;
             if (boost < 1) {
                 boost = 1;
+                dBoost = 0;
             }
         }
 
@@ -142,14 +146,12 @@ public class Player {
 //                25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
     }
 
-    public float getSpeed() {
-        return this.speed;
-    }
-
     public float getDistance() {
         return this.distance;
     }
-
+    public float getSpeed() {
+        return this.speed;
+    }
     public float getAngle() {
         return this.angle;
     }

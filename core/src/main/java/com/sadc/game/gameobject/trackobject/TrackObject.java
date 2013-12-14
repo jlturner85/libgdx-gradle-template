@@ -35,8 +35,9 @@ public abstract class TrackObject {
     public abstract void draw(float delta, float playerDistance, SpriteBatch spriteBatch);
 
     public boolean collide(Player player) {
-        return active && (Math.abs(distance - player.getDistance()) < player.getSpeed() / 25f &&
-                Math.abs(angle - player.getAngle()) % 360 < width);
+        float angleDiff = Math.abs(angle - player.getAngle()) % 360;
+        return active && (Math.abs(distance - player.getDistance()) < player.getSpeed() / 50f &&
+                (angleDiff < width || angleDiff > 360 - width));
     }
 
     protected boolean isActive() {

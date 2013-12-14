@@ -69,6 +69,7 @@ public class Animator implements ApplicationListener {
 
     public void draw(SpriteBatch spriteBatch){
         this.spriteBatch = spriteBatch;
+        // call render
         render();
     }
 

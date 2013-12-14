@@ -16,7 +16,7 @@ import com.sadc.game.screen.SplashScreen;
  * <p/>
  * Class Description:
  *
- * @author Justin Turner (t590035)
+ * @author Justin Turner (t590035) and gerald
  *         Date: 12/10/13
  */
 

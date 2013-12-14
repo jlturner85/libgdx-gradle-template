@@ -5,12 +5,16 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
+import com.sadc.game.GameConstants;
 
 public class SplashScreen extends GameScreen {
     private float splashScreenTime;
     private final SpriteBatch spriteBatch;
     private final Texture background;
     public SplashScreen(){
+        GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("menu.mp3"));
+        long id = GameConstants.currentMusic.play(GameConstants.MUSIC_VOLUME);
+        GameConstants.currentMusic.setLooping(id, true);
         splashScreenTime = 2;
         spriteBatch = new SpriteBatch();
         background = new Texture("seems-legit-tunnel.jpg");

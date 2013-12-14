@@ -1,6 +1,7 @@
 package com.sadc.game;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 
 public class GameConstants {
     public static final int SCREEN_HEIGHT = 480;
@@ -38,4 +39,6 @@ public class GameConstants {
     public static boolean OLD_P2_ENTER_PRESSED = false;
     public static final String LONDON_FONT = "OldLondon.ttf";
     public static final int MENU_FONT_SIZE = 20;
+    public static Sound currentMusic;
+    public static final float MUSIC_VOLUME = 0.1f;
 }

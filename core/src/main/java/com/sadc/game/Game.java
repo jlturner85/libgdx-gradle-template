@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.screen.GameScreen;
+import com.sadc.game.screen.LoadingScreen;
 import com.sadc.game.screen.GameplayScreen;
 import com.sadc.game.screen.MenuScreen;
 import com.sadc.game.screen.SplashScreen;
@@ -50,7 +51,7 @@ public class Game extends com.badlogic.gdx.Game {
      */
     @Override
     public void create() {
-        setScreen(new SplashScreen());
+        setScreen(new LoadingScreen("com.sadc.game.screen.SplashScreen"));
         //music = Gdx.audio.newMusic(Gdx.files.getFileHandle("data/8.12.mp3", Files.FileType.Internal));
         //music.setLooping(true);
         //music.play();

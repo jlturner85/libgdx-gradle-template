@@ -79,7 +79,7 @@ public class MenuScreen  extends GameScreen{
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         leaderboardHighlighted();
                     } else if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
-                        this.nextGameScreen = new GameplayScreen();
+                        this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.GameplayScreen");
                         this.screenDone = true;
                     }
                     break;

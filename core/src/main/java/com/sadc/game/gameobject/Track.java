@@ -1,12 +1,3 @@
-/*
- * $Id$
- *
- * Copyright (c) 2013 HEB
- * All rights reserved.
- *
- * This software is the confidential and proprietary information
- * of HEB.
- */
 package com.sadc.game.gameobject;
 
 import java.util.ArrayList;

@@ -7,6 +7,10 @@ public class GameConstants {
     public static final int SCREEN_HEIGHT = 480;
     public static final int SCREEN_WIDTH = 640;
 
+    public static final float MAX_SPIN = 4f;
+    public static final float TORQUE = 0.5f;
+    public static final float FRICTION = 0.15f;
+
     public static final int ESCAPE_KEY = Keys.ESCAPE;
     public static final int P1_UP = Keys.UP;
     public static final int P1_LEFT = Keys.LEFT;

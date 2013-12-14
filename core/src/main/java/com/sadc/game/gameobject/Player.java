@@ -77,6 +77,11 @@ public class Player {
 
     public void dispose() {
         texture.dispose();
+        idleSound.dispose();
+        firstGearSound.dispose();
+        secondGearSound.dispose();
+        thirdGearSound.dispose();
+        fourthGearSound.dispose();
     }
 
     public void update(float delta) {
@@ -130,4 +135,11 @@ public class Player {
         return this.speed;
     }
 
+    public float getDistance() {
+        return this.distance;
+    }
+
+    public float getAngle() {
+        return this.angle;
+    }
 }

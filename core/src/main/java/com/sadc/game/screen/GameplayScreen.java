@@ -23,19 +23,14 @@ public class GameplayScreen extends GameScreen{
     public GameplayScreen() {
         GameConstants.currentMusic.stop();
         GameConstants.currentMusic.dispose();
-        //GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
-        //long id = GameConstants.currentMusic.play(0.05f);
-        //GameConstants.currentMusic.setLooping(id, true);
+        GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
+        long id = GameConstants.currentMusic.play(0.05f);
+        GameConstants.currentMusic.setLooping(id, true);
         spriteBatch = new SpriteBatch();
-        track1 = new Texture("tunnel1.png");
-        track2 = new Texture("tunnel2.png");
-        fade = new Texture("fade.png");
-        distance = 0;
 
         track = new Track();
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
         hitSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
-        trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/trains005.wav"));
     }
 
     public void setPaused(boolean paused) {
@@ -45,6 +40,8 @@ public class GameplayScreen extends GameScreen{
     @Override
     public void dispose() {
         spriteBatch.dispose();
+        explosionSound.dispose();
+        hitSound.dispose();
         track.dispose();
     }
 

@@ -23,7 +23,22 @@ public class Animator implements ApplicationListener {
     TextureRegion                   currentFrame;           // #7
 
     float stateTime;                                        // #8
+
     float frameDuration;
+    float x;
+    float y;
+    float originX;
+    float originY;
+    float width;
+    float height;
+    float scaleX;
+    float scaleY;
+    float rotation;
+    int srcX;
+    int srcY;
+    int srcWidth; int srcHeight;
+    boolean flipX;
+    boolean flipY;
 
     // The first parameter is the frame time and the second is an array of regions (frames) making up the animation
     public Animator (Texture texture, int frameColumns, int frameRows, float frameDuration){//, float frameDuration, TextureRegion... keyFrames){
@@ -62,13 +77,37 @@ public class Animator implements ApplicationListener {
         stateTime += Gdx.graphics.getDeltaTime();                       // #15
         currentFrame = walkAnimation.getKeyFrame(stateTime, true);      // #16
 //        spriteBatch.begin();
-        spriteBatch.draw(currentFrame, 50, 50);                         // #17
+        spriteBatch.draw(currentFrame.getTexture(), x, y, originX, originY, width, height, scaleX, scaleY, rotation, srcX, srcY, srcWidth, srcHeight, flipX, flipY);                         // #17
 //        spriteBatch.end();
 
     }
 
-    public void draw(SpriteBatch spriteBatch){
+    public void draw(
+            SpriteBatch spriteBatch,
+            float x, float y,
+            float originX, float originY,
+            float width, float height,
+            float scaleX, float scaleY,
+            float rotation,
+            int srcX, int srcY,
+            int srcWidth, int srcHeight,
+            boolean flipX, boolean flipY){
         this.spriteBatch = spriteBatch;
+        this.x = x;
+        this.y = y;
+        this.originX = originX;
+        this.originY = originY;
+        this.width = width;
+        this.height = height;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        this.rotation = rotation;
+        this.srcX = srcX;
+        this.srcY = srcY;
+        this.srcWidth = srcWidth;
+        this.srcHeight = srcHeight;
+        this.flipX = flipX;
+        this.flipY = flipY;
         // call render
         render();
     }

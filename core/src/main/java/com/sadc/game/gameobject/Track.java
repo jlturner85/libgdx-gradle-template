@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.trackobject.Boost;
 import com.sadc.game.gameobject.trackobject.TrackObject;
+import com.sadc.game.gameobject.trackobject.Wall;
 
 /**
  * Don't tell me when to write Javadocs
@@ -38,8 +39,13 @@ public class Track {
         length = 1000;
         objects = new ArrayList<TrackObject>();
         for (int i = 1; i < 100; i++) {
-            Boost b = new Boost(i * 8, i * 30);
-            objects.add(b);
+            if (i % 2 == 0) {
+                Boost b = new Boost(i * 8, ((i * 30) % 360) - 180);
+                objects.add(b);
+            } else {
+                Wall w = new Wall(i * 8, ((i * 30) % 360) - 180);
+                objects.add(w);
+            }
         }
 
     }

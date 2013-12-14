@@ -18,7 +18,6 @@ public class Player {
     private static final int CAR_SPRITE_COLUMNS = 1;
     private static final float CAR_FRAME_DURATION = 0;
 
-    private float distance;
     private Sound idleSound;
     private Sound firstGearSound;
     private Sound secondGearSound;
@@ -26,16 +25,22 @@ public class Player {
     private Sound fourthGearSound;
     private Sound fifthGearSound;
     private Sound explosionSound;
+
+    private float distance;
+    private long time;
     private float speed;
     private float topSpeed;
     private float acceleration;
     private float angle;
     private float spin;
+
     private float boost;
     private float dBoost;
+    private int timeout;
 
     private int leftKey;
     private int rightKey;
+    private int brakeKey;
 
     private Texture texture;
 
@@ -54,9 +59,11 @@ public class Player {
         if (playerNum == 1) {
             leftKey = GameConstants.P1_LEFT;
             rightKey = GameConstants.P1_RIGHT;
+            brakeKey = GameConstants.P1_B;
         } else if (playerNum == 2) {
             leftKey = GameConstants.P2_LEFT;
             rightKey = GameConstants.P2_RIGHT;
+            brakeKey = GameConstants.P2_B;
         }
         idleSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_0.wav"));
         firstGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_1_0.wav"));
@@ -78,6 +85,15 @@ public class Player {
         dBoost = GameConstants.D_BOOST;
     }
 
+    public void crash() {
+        timeout = 120;
+        speed = 0;
+        angle = 0;
+        spin = 0;
+        boost = 1;
+        dBoost = 0;
+    }
+
     public void dispose() {
         texture.dispose();
         idleSound.dispose();
@@ -88,57 +104,74 @@ public class Player {
     }
 
     public void update(float delta) {
-        speed += acceleration * Math.max(1, speed / topSpeed) * ((topSpeed * boost) - speed);
-        distance += speed / 60f;
-
-        dBoost += GameConstants.D_D_BOOST;
-        if (boost > 1) {
-            boost += dBoost;
-            if (boost < 1) {
-                boost = 1;
-                dBoost = 0;
-            }
-        }
-
-        boolean left = Gdx.input.isKeyPressed(leftKey);
-        boolean right = Gdx.input.isKeyPressed(rightKey);
-
-        if (left) {
-            spin -= GameConstants.TORQUE;
-            if (spin < -GameConstants.MAX_SPIN) spin = -GameConstants.MAX_SPIN;
-        }
-        if (right) {
-            spin += GameConstants.TORQUE;
-            if (spin > GameConstants.MAX_SPIN) spin = GameConstants.MAX_SPIN;
-        }
-        if (!left && !right) {
-            if (spin > 0) {
-                spin -= GameConstants.FRICTION;
-                if (spin < 0) {
-                    spin = 0;
+        time++;
+        if (timeout <= 0) {
+            if (Gdx.input.isKeyPressed(brakeKey)) {
+                speed -= acceleration * 35;
+                if (speed < 0) {
+                    speed = 0;
                 }
-            } else if (spin < 0) {
-                spin += GameConstants.FRICTION;
+            } else {
+                speed += acceleration * Math.max(1, speed / topSpeed) * ((topSpeed * boost) - speed);
+            }
+            distance += speed / 60f;
+
+            dBoost += GameConstants.D_D_BOOST;
+            if (boost > 1) {
+                boost += dBoost;
+                if (boost < 1) {
+                    boost = 1;
+                    dBoost = 0;
+                }
+            }
+
+            boolean left = Gdx.input.isKeyPressed(leftKey);
+            boolean right = Gdx.input.isKeyPressed(rightKey);
+
+            if (left) {
+                spin -= GameConstants.TORQUE;
+                if (spin < -GameConstants.MAX_SPIN) spin = -GameConstants.MAX_SPIN;
+            }
+            if (right) {
+                spin += GameConstants.TORQUE;
+                if (spin > GameConstants.MAX_SPIN) spin = GameConstants.MAX_SPIN;
+            }
+            if (!left && !right) {
                 if (spin > 0) {
-                    spin = 0;
+                    spin -= GameConstants.FRICTION;
+                    if (spin < 0) {
+                        spin = 0;
+                    }
+                } else if (spin < 0) {
+                    spin += GameConstants.FRICTION;
+                    if (spin > 0) {
+                        spin = 0;
+                    }
                 }
             }
-        }
 
-        angle += spin;
-        while (angle > 180) angle -= 360;
-        while (angle < -180) angle += 360;
+            angle += spin;
+            while (angle > 180) angle -= 360;
+            while (angle < -180) angle += 360;
+        } else {
+            timeout--;
+        }
     }
 
     public void draw (float delta, SpriteBatch spriteBatch) {
-        carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
-                25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
-//        spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
-//                25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
+        if (timeout <= 0) {
+            carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
+//            spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+//                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
+        }
     }
 
     public float getDistance() {
         return this.distance;
+    }
+    public long getTime() {
+        return this.time;
     }
     public float getSpeed() {
         return this.speed;

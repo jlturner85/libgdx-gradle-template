@@ -3,6 +3,9 @@ package com.sadc.game;
 import com.badlogic.gdx.Input.Keys;
 
 public class GameConstants {
+    public static final int SCREEN_HEIGHT = 480;
+    public static final int SCREEN_WIDTH = 640;
+
     public static final int ESCAPE_KEY = Keys.ESCAPE;
     public static final int P1_UP = Keys.UP;
     public static final int P1_LEFT = Keys.LEFT;

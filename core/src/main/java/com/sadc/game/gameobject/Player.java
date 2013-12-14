@@ -14,6 +14,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
+import com.sadc.game.animation.Animator;
 
 /**
  * Fuck Javadocs.
@@ -21,6 +22,10 @@ import com.sadc.game.GameConstants;
  * @author f536985 (Tom Farello)
  */
 public class Player {
+
+    private static final int CAR_SPRITE_ROWS = 1;
+    private static final int CAR_SPRITE_COLUMNS = 1;
+    private static final float CAR_FRAME_DURATION = 0;
 
     private float distance;
     private Sound idleSound;
@@ -41,6 +46,8 @@ public class Player {
     private int rightKey;
 
     private Texture texture;
+
+    private Animator carAnimator;
 
     public Player(int playerNum) {
         distance = 0;
@@ -67,6 +74,8 @@ public class Player {
         long id = firstGearSound.play(0.5f);
         firstGearSound.setLooping(id, true);
         texture = new Texture("car.png");
+        carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
+
     }
 
     public void boost() {
@@ -127,8 +136,10 @@ public class Player {
     }
 
     public void draw (float delta, SpriteBatch spriteBatch) {
-        spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+        carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
                 25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
+//        spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+//                25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
     }
 
     public float getSpeed() {

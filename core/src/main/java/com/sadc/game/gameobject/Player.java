@@ -21,11 +21,13 @@ import com.sadc.game.GameConstants;
  */
 public class Player {
 
+    private float distance;
     private float speed;
     private float topSpeed;
     private float acceleration;
     private float angle;
     private float spin;
+    private float boost;
 
     private int leftKey;
     private int rightKey;
@@ -33,11 +35,13 @@ public class Player {
     private Texture texture;
 
     public Player(int playerNum) {
+        distance = 0;
         speed = 0;
         topSpeed = 5;
         acceleration = 0.003f;
         angle = 0;
         spin = 0;
+        boost = 1;
 
         if (playerNum == 1) {
             leftKey = GameConstants.P1_LEFT;
@@ -50,8 +54,27 @@ public class Player {
         texture = new Texture("car.png");
     }
 
+    public void boost() {
+        System.out.println("BOOST!");
+        boost = GameConstants.BOOST;
+        speed += 0.5f;
+    }
+
+    public void dispose() {
+        texture.dispose();
+    }
+
     public void update(float delta) {
-        speed += acceleration * (topSpeed - speed);
+        speed += boost * acceleration * ((topSpeed * boost) - speed);
+        //System.out.println(speed);
+        distance += speed / 60f;
+
+        if (boost > 1) {
+            boost -= 0.25f;
+            if (boost < 1) {
+                boost = 1;
+            }
+        }
 
         boolean left = Gdx.input.isKeyPressed(leftKey);
         boolean right = Gdx.input.isKeyPressed(rightKey);
@@ -88,8 +111,16 @@ public class Player {
                 25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
     }
 
+    public float getDistance() {
+        return this.distance;
+    }
+
     public float getSpeed() {
         return this.speed;
+    }
+
+    public float getAngle() {
+        return this.angle;
     }
 
 }

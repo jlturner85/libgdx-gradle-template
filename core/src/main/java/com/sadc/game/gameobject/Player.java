@@ -15,8 +15,11 @@ import com.sadc.game.animation.Animator;
 public class Player {
 
     private static final int CAR_SPRITE_ROWS = 1;
-    private static final int CAR_SPRITE_COLUMNS = 1;
-    private static final float CAR_FRAME_DURATION = 0;
+    private static final int CAR_SPRITE_COLUMNS = 2;
+    private static final float CAR_FRAME_DURATION = 0.2f;
+//    private static final int WALK_SPRITE_ROWS = 5;
+//    private static final int WALK_SPRITE_COLUMNS = 6;
+//    private static final float WALK_FRAME_DURATION = 0.07f;
 
     private Sound idleSound;
     private Sound firstGearSound;
@@ -45,6 +48,8 @@ public class Player {
     private Texture texture;
 
     private Animator carAnimator;
+//    private Texture walkerTexture;
+//    private Animator walkerAnimator;
 
     public Player(int playerNum) {
         distance = 0;
@@ -73,9 +78,10 @@ public class Player {
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
         long id = firstGearSound.play(0.5f);
         firstGearSound.setLooping(id, true);
-        texture = new Texture("car.png");
+        texture = new Texture("cars_br.png");
         carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
-
+//        walkerTexture = new Texture("animation_sheet.png");
+//        walkerAnimator = new Animator(walkerTexture, WALK_SPRITE_COLUMNS, WALK_SPRITE_ROWS, WALK_FRAME_DURATION);
     }
 
     public void boost() {
@@ -96,6 +102,7 @@ public class Player {
 
     public void dispose() {
         texture.dispose();
+//        walkerTexture.dispose();
         idleSound.dispose();
         firstGearSound.dispose();
         secondGearSound.dispose();
@@ -161,7 +168,8 @@ public class Player {
     public void draw (float delta, SpriteBatch spriteBatch) {
         if (timeout <= 0) {
             carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
-                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
+                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);//, 0, 0, 50, 50, false, false);
+//            walkerAnimator.draw(spriteBatch, 50,50);
 //            spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
 //                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
         }

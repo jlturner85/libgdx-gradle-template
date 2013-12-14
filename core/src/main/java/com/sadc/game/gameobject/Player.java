@@ -10,6 +10,7 @@
 package com.sadc.game.gameobject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
@@ -20,7 +21,13 @@ import com.sadc.game.GameConstants;
  * @author f536985 (Tom Farello)
  */
 public class Player {
-
+    private Sound idleSound;
+    private Sound firstGearSound;
+    private Sound secondGearSound;
+    private Sound thirdGearSound;
+    private Sound fourthGearSound;
+    private Sound fifthGearSound;
+    private Sound explosionSound;
     private float speed;
     private float topSpeed;
     private float acceleration;
@@ -46,7 +53,14 @@ public class Player {
             leftKey = GameConstants.P2_LEFT;
             rightKey = GameConstants.P2_RIGHT;
         }
-
+        idleSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_0.wav"));
+        firstGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_1_0.wav"));
+        secondGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_2_0.wav"));
+        thirdGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_3_0.wav"));
+        fourthGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_4_0.wav"));
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
+        long id = firstGearSound.play(0.5f);
+        firstGearSound.setLooping(id, true);
         texture = new Texture("car.png");
     }
 

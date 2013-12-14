@@ -10,16 +10,6 @@ import com.sadc.game.screen.GameplayScreen;
 import com.sadc.game.screen.MenuScreen;
 import com.sadc.game.screen.SplashScreen;
 
-/**
- * Created with IntelliJ IDEA.
- * Copyright (c) 2013 HEB
- * All rights reserved.
- * <p/>
- * Class Description:
- *
- * @author Justin Turner (t590035) and gerald
- *         Date: 12/10/13
- */
 
 public class Game extends com.badlogic.gdx.Game {
     private Music music;

@@ -1,6 +1,7 @@
 package com.sadc.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,15 +16,17 @@ public class GameplayScreen extends GameScreen{
     private final Texture track2;
     private final Texture fade;
     private float distance;
-
     private Player player;
+    private Sound explosionSound;
+    private Sound trainSound;
+    private Sound hitSound;
 
     public GameplayScreen() {
         GameConstants.currentMusic.stop();
         GameConstants.currentMusic.dispose();
-        GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
-        long id = GameConstants.currentMusic.play(GameConstants.MUSIC_VOLUME);
-        GameConstants.currentMusic.setLooping(id, true);
+        //GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
+        //long id = GameConstants.currentMusic.play(0.05f);
+        //GameConstants.currentMusic.setLooping(id, true);
         spriteBatch = new SpriteBatch();
         track1 = new Texture("tunnel1.png");
         track2 = new Texture("tunnel2.png");
@@ -31,6 +34,9 @@ public class GameplayScreen extends GameScreen{
         distance = 0;
 
         player = new Player(1);
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
+        trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/trains005.wav"));
     }
 
     @Override
@@ -50,10 +56,10 @@ public class GameplayScreen extends GameScreen{
         player.update(delta);
         distance += player.getSpeed() / 60f;
 
-        boolean exit = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
-        if (exit){
-            Gdx.app.exit();
+        if ((!GameConstants.OLD_ESCAPE_PRESSED) && (Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY))){
+            this.gamePaused = true;
         }
+        GameConstants.OLD_ESCAPE_PRESSED = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
     }
 
     @Override

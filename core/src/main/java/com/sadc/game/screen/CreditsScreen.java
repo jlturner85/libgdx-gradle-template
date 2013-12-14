@@ -19,8 +19,8 @@ public class CreditsScreen extends GameScreen {
     private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
     public CreditsScreen(){
         spriteBatch = new SpriteBatch();
-        titleFont = generator.generateFont(40);
-        creditFont = generator.generateFont(GameConstants.MENU_FONT_SIZE);
+        titleFont = generator.generateFont(20);
+        creditFont = generator.generateFont(15);
     }
     @Override
     public void update(float delta) {
@@ -53,8 +53,8 @@ public class CreditsScreen extends GameScreen {
         creditFont.draw(spriteBatch, "Tom Farello - Programmer", creditXPosition, creditHeight - 105);
         creditFont.draw(spriteBatch, "Danny Carroll, Darren Danvers - Game Jam Theme", creditXPosition, creditHeight - 140);
         creditFont.draw(spriteBatch, "Perturbator - Music", creditXPosition, creditHeight - 175);
-        creditFont.draw(spriteBatch, "Game Jam Theme: 'London Underground'", creditXPosition, creditHeight - 210);
-        creditFont.draw(spriteBatch, "SADC Game Jam 2013: 12/13/13-12/15/13", creditXPosition, creditHeight - 245);
+        creditFont.draw(spriteBatch, "Game Jam Theme - London Underground", creditXPosition, creditHeight - 210);
+        creditFont.draw(spriteBatch, "SADC Game Jam 2013 12/13/13-12/15/13", creditXPosition, creditHeight - 245);
         spriteBatch.end();
     }
 

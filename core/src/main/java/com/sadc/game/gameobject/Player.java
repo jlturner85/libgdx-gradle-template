@@ -34,8 +34,8 @@ public class Player {
 
     public Player(int playerNum) {
         speed = 0;
-        topSpeed = 2;
-        acceleration = 0.002f;
+        topSpeed = 4;
+        acceleration = 0.003f;
         angle = 0;
         spin = 0;
 
@@ -57,21 +57,21 @@ public class Player {
         boolean right = Gdx.input.isKeyPressed(rightKey);
 
         if (left) {
-            spin -= 0.2f;
-            if (spin < -3) spin = -3;
+            spin -= GameConstants.TORQUE;
+            if (spin < -GameConstants.MAX_SPIN) spin = -GameConstants.MAX_SPIN;
         }
         if (right) {
-            spin += 0.2f;
-            if (spin > 3) spin = 3;
+            spin += GameConstants.TORQUE;
+            if (spin > GameConstants.MAX_SPIN) spin = GameConstants.MAX_SPIN;
         }
         if (!left && !right) {
             if (spin > 0) {
-                spin -= 0.05f;
+                spin -= GameConstants.FRICTION;
                 if (spin < 0) {
                     spin = 0;
                 }
             } else if (spin < 0) {
-                spin += 0.05f;
+                spin += GameConstants.FRICTION;
                 if (spin > 0) {
                     spin = 0;
                 }

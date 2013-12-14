@@ -13,6 +13,9 @@ public class DesktopLauncher {
         config.title = "SADC Game";
         config.vSyncEnabled = true;
         config.useGL20 = true;
+/*        config.height = 1080;
+        config.width = 1920;*/
+        config.fullscreen = true;
 		new LwjglApplication(new Game(), config);
 	}
 }

@@ -13,7 +13,7 @@ public class SplashScreen extends GameScreen {
     public SplashScreen(){
         splashScreenTime = 2;
         spriteBatch = new SpriteBatch();
-        background = new Texture("badlogic.jpg");
+        background = new Texture("seems-legit-tunnel.jpg");
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -32,7 +32,7 @@ public class SplashScreen extends GameScreen {
     public void draw(float delta) {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(background, 130, 130, 400, 300);
+        spriteBatch.draw(background, 80, 50, 500, 400);
         spriteBatch.end();
     }
 

@@ -14,7 +14,7 @@ import com.sadc.game.GameConstants;
 public class MenuScreen  extends GameScreen{
     private final SpriteBatch spriteBatch;
     private final Texture background;
-    private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Minecraftia.ttf"));
+    private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
     private final BitmapFont startGameFont;
     private final BitmapFont creditsFont;
     private final BitmapFont exitFont;
@@ -36,10 +36,10 @@ public class MenuScreen  extends GameScreen{
         spriteBatch = new SpriteBatch();
         background = new Texture("badlogic.jpg");
         //the number passed to the generator is the size of the text
-        startGameFont = generator.generateFont(12);
-        creditsFont = generator.generateFont(12);
-        exitFont = generator.generateFont(12);
-        leaderboardFont = generator.generateFont(12);
+        startGameFont = generator.generateFont(GameConstants.MENU_FONT_SIZE);
+        creditsFont = generator.generateFont(GameConstants.MENU_FONT_SIZE);
+        exitFont = generator.generateFont(GameConstants.MENU_FONT_SIZE);
+        leaderboardFont = generator.generateFont(GameConstants.MENU_FONT_SIZE);
         startGameFont.setColor(Color.BLUE);
         selectedMenuItem = START_SELECTED;
     }

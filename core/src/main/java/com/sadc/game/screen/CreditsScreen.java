@@ -15,7 +15,7 @@ public class CreditsScreen extends GameScreen {
      */
     private final SpriteBatch spriteBatch;
     private final BitmapFont font;
-    private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Minecraftia.ttf"));
+    private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
     public CreditsScreen(){
         spriteBatch = new SpriteBatch();
         font = generator.generateFont(12);

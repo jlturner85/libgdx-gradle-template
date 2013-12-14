@@ -33,5 +33,6 @@ public class GameConstants {
     public static final int P2_EXTRA_BUTTON_2 = Keys.L;
     public static boolean OLD_P1_ENTER_PRESSED = false;
     public static boolean OLD_P2_ENTER_PRESSED = false;
-
+    public static final String LONDON_FONT = "OldLondon.ttf";
+    public static final int MENU_FONT_SIZE = 20;
 }

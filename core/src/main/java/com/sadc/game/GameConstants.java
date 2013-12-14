@@ -10,6 +10,7 @@ public class GameConstants {
     public static final float MAX_SPIN = 4f;
     public static final float TORQUE = 0.5f;
     public static final float FRICTION = 0.15f;
+    public static final float BOOST = 4;
 
     public static final int ESCAPE_KEY = Keys.ESCAPE;
     public static final int P1_UP = Keys.UP;

@@ -8,6 +8,7 @@ import com.sadc.game.HelloApp;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {
+        //test comment
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "SADC Game";
         config.vSyncEnabled = true;

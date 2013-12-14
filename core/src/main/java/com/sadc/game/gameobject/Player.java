@@ -34,7 +34,7 @@ public class Player {
 
     public Player(int playerNum) {
         speed = 0;
-        topSpeed = 4;
+        topSpeed = 5;
         acceleration = 0.003f;
         angle = 0;
         spin = 0;

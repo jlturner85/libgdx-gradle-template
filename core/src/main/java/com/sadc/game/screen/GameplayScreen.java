@@ -59,14 +59,14 @@ public class GameplayScreen extends GameScreen{
     @Override
     public void draw(float delta) {
         float drawDistance = 1 + (distance % 0.087f);
-        int frame = 11 - (int) ((distance / 0.087f) % 12);
+        int frame = 7 - (int) ((distance / 0.087f) % 8);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
         spriteBatch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         float scale = 2.117920011581067f;
         for (int i = 0; i < 50; i++) {
             Texture texture;
-            if (i % 12 == frame) {
+            if (i % 8 == frame) {
                 texture = track2;
             } else {
                 texture = track1;

@@ -30,7 +30,7 @@ public class LevelSelectScreen extends GameScreen {
     private Texture arsenal;
     private float selectX;
     private float selectY = 185;
-    private String selectedLevel;
+    private int selectedLevel;
     private String[] levelStringArray = {"liverpool", "paddington", "arsenal"};
     private int currentLevelPosition = 0;
     private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
@@ -55,6 +55,7 @@ public class LevelSelectScreen extends GameScreen {
         }
 
         if (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) {
+            GameConstants.CURRENT_SELECTED_LEVEL = selectedLevel;
             this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.GameplayScreen");
             this.screenDone = true;
         }
@@ -65,14 +66,14 @@ public class LevelSelectScreen extends GameScreen {
             } else {
                 currentLevelPosition = levelStringArray.length- 1;
             }
-            selectedLevel = levelStringArray[currentLevelPosition];
+            selectedLevel = currentLevelPosition;
         } else if (p1Right && !GameConstants.OLD_P1_RIGHT_PRESSED){
             if (currentLevelPosition < levelStringArray.length- 1){
                 currentLevelPosition = currentLevelPosition + 1;
             } else {
                 currentLevelPosition = 0;
             }
-            selectedLevel = levelStringArray[currentLevelPosition];
+            selectedLevel = currentLevelPosition;
         }
         switch(currentLevelPosition){
             case 0:

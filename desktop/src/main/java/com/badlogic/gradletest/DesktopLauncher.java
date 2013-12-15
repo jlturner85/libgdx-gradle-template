@@ -10,7 +10,7 @@ public class DesktopLauncher {
 	public static void main(String[] arg) {
         //test comment 2
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.title = "Hard Line in The Tubes";
+        config.title = "Hard Lines in The Tube";
         config.vSyncEnabled = true;
         config.useGL20 = true;
 /*        config.height = 1080;

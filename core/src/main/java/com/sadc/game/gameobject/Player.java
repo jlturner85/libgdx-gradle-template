@@ -61,13 +61,13 @@ public class Player {
 //    private Texture walkerTexture;
 //    private Animator walkerAnimator;
 
-    public Player(int playerNum, Track track) {
+    public Player(int playerNum, Track track, int selectedCar) {
         this.track = track;
 
         distance = 0;
         speed = 0;
-        topSpeed = 5;
-        acceleration = 0.002f;
+        topSpeed = 4 + selectedCar;
+        acceleration = 0.003f - (0.001f * selectedCar);
         angle = 0;
         spin = 0;
         boost = 1;
@@ -82,15 +82,13 @@ public class Player {
             rightKey = GameConstants.P2_RIGHT;
             brakeKey = GameConstants.P2_B;
         }
-        idleSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_0.wav"));
+        /*idleSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_0.wav"));
         firstGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_1_0.wav"));
         secondGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_2_0.wav"));
         thirdGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_3_0.wav"));
-        fourthGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_4_0.wav"));
-        explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
-        long id = firstGearSound.play(0.5f);
-        firstGearSound.setLooping(id, true);
-        texture = new Texture("car1_4frame.png");
+        fourthGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_4_0.wav"));*/
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
+        texture = new Texture("car" + (selectedCar + 1) + "_4frame.png");
         explosionTexture = new Texture("explosion_6frames.png");
         carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
         explosionAnimator = new Animator(explosionTexture, EXPLOSION_SPRITE_COLUMNS, EXPLOSION_SPRITE_ROWS, EXPLOSION_FRAME_DURATION);
@@ -122,6 +120,7 @@ public class Player {
             speed = 0;
             explosion = true;
         }
+        explosionSound.play();
     }
 
     public void bonusTime(int bonusFrames) {
@@ -139,11 +138,12 @@ public class Player {
     public void dispose() {
         texture.dispose();
 //        walkerTexture.dispose();
-        idleSound.dispose();
+        /*idleSound.dispose();
         firstGearSound.dispose();
         secondGearSound.dispose();
         thirdGearSound.dispose();
-        fourthGearSound.dispose();
+        fourthGearSound.dispose(); */
+        explosionSound.dispose();
     }
 
     public void update(float delta) {

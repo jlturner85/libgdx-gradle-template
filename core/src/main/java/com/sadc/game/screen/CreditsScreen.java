@@ -27,7 +27,7 @@ public class CreditsScreen extends GameScreen {
         spriteBatch = new SpriteBatch();
         titleFont = generator.generateFont(20);
         creditFont = generator.generateFont(15);
-        lightPole = new Texture("lightPole.png");
+        lightPole = new Texture("undergroundSign.png");
         skyLine = new Texture("slyline.png");
         sky = new Texture("datNightSky.png");
         happy = new Texture("happy.png");
@@ -56,7 +56,7 @@ public class CreditsScreen extends GameScreen {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
         spriteBatch.draw(sky, 0, 0);
-        spriteBatch.draw(lightPole, 350, -60, 400, 500);
+        spriteBatch.draw(lightPole, 300, 0, 350, 400);
         String creditsText = "Another Year of Taking the Biscuit...";
         titleFont.draw(spriteBatch, creditsText, 60, 400);
         float creditHeight = 325;

@@ -1,7 +1,9 @@
 package com.sadc.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -16,11 +18,22 @@ public class CreditsScreen extends GameScreen {
     private final SpriteBatch spriteBatch;
     private final BitmapFont creditFont;
     private final BitmapFont titleFont;
+    private Texture lightPole;
+    private Texture skyLine;
+    private Texture sky;
+    private Texture happy;
     private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
     public CreditsScreen(){
         spriteBatch = new SpriteBatch();
         titleFont = generator.generateFont(20);
         creditFont = generator.generateFont(15);
+        lightPole = new Texture("lightPole.png");
+        skyLine = new Texture("slyline.png");
+        sky = new Texture("datNightSky.png");
+        happy = new Texture("happy.png");
+        titleFont.setColor(Color.YELLOW);
+        creditFont.setColor(Color.YELLOW);
+
     }
     @Override
     public void update(float delta) {
@@ -42,6 +55,8 @@ public class CreditsScreen extends GameScreen {
         float creditXPosition = 30;
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
+        spriteBatch.draw(sky, 0, 0);
+        spriteBatch.draw(lightPole, 350, -60, 400, 500);
         String creditsText = "Another Year of Taking the Biscuit...";
         titleFont.draw(spriteBatch, creditsText, 60, 400);
         float creditHeight = 325;

@@ -32,7 +32,7 @@ public class LeaderboardScreen extends GameScreen {
         leaderboardListArray[0]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_1_LEADERBOARD);
         currentLeaderBoardList = leaderboardListArray[0];
         currentTrackName = GameConstants.TRACK_1_NAME;
-        generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Minecraftia.ttf"));
         titleFont = generator.generateFont(40);
         font = generator.generateFont(GameConstants.MENU_FONT_SIZE);
         spriteBatch = new SpriteBatch();
@@ -43,8 +43,8 @@ public class LeaderboardScreen extends GameScreen {
         spriteBatch.begin();
         spriteBatch.draw(chavPicture, 80, 200, 150, 150);
         spriteBatch.draw(chav2Picture, 450, 185, 125, 175);
-        titleFont.draw(spriteBatch, "Top Chavs", 250, 450);
-        font.draw(spriteBatch, "<      " + currentTrackName + "      >", 270, 375);
+        titleFont.draw(spriteBatch, "Top Chavs", 200, 450);
+        font.draw(spriteBatch, "<      " + currentTrackName + "      >", 190, 385);
         float leaderboardHeight = height;
         for (LeaderboardListing leaderboardListing: currentLeaderBoardList){
             font.draw(spriteBatch, leaderboardListing.getName(), 250, leaderboardHeight);

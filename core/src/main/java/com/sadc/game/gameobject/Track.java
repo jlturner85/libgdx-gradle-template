@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.trackobject.Boost;
+import com.sadc.game.gameobject.trackobject.Checkpoint;
 import com.sadc.game.gameobject.trackobject.TrackObject;
 import com.sadc.game.gameobject.trackobject.Train;
 import com.sadc.game.gameobject.trackobject.Wall;
-import com.sadc.game.util.GameUtil;
 
 /**
  * Don't tell me when to write Javadocs
@@ -21,7 +21,8 @@ public class Track {
 
     private static final int TOTAL_FRAMES = 8;
 
-    private float length;
+    private int timer;
+    private String trackName;
 
     private List<TrackObject> objects;
     private Player player;
@@ -36,7 +37,7 @@ public class Track {
         player = new Player(1);
 
         //debug
-        length = 1000;
+        timer = 3600;
         objects = new ArrayList<TrackObject>();
         for (int i = 1; i < 100; i++) {
             if (i % 2 == 0) {
@@ -47,11 +48,13 @@ public class Track {
                 objects.add(w);
             }
         }
-        for (int i = 1; i < 10; i++) {
+        /*for (int i = 1; i < 10; i++) {
             Train t = new Train(i * 25, 4);
             objects.add(t);
-        }
-
+        }*/
+        Checkpoint finish = new Checkpoint(25, 30);
+        objects.add(finish);
+        trackName = "Test Track";
     }
 
     public void dispose() {
@@ -64,6 +67,7 @@ public class Track {
     }
 
     public void update(float delta) {
+        timer--;
         player.update(delta);
         for (TrackObject o : objects) {
             o.update(delta, player);
@@ -83,7 +87,7 @@ public class Track {
                 texture = tunnel1;
             }
             float drawDistance = trackDistance * scale;
-            GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
+            GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
             spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 250, GameConstants.SCREEN_HEIGHT / 2 - 250,
                     250, 250, 500, 500, drawDistance, drawDistance, 0, 0, 0, 500, 500, false, false);
             scale *= 0.92f;
@@ -96,6 +100,9 @@ public class Track {
 
     public Player getPlayer() {
         return player;
+    }
+    public int getTimer() {
+        return timer;
     }
 
 }

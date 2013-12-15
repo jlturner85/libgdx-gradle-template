@@ -16,7 +16,6 @@ public class GameplayScreen extends GameScreen{
 
     private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
     private BitmapFont kphFont;
-    private BitmapFont timeFont;
     private BitmapFont timerFont;
 
     private boolean paused;
@@ -34,7 +33,6 @@ public class GameplayScreen extends GameScreen{
 
         spriteBatch = new SpriteBatch();
         kphFont = generator.generateFont(32);
-        timeFont = generator.generateFont(20);
         timerFont = generator.generateFont(56);
 
         track = new Track();
@@ -77,11 +75,7 @@ public class GameplayScreen extends GameScreen{
             spriteBatch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             track.draw(delta, spriteBatch);
             kphFont.draw(spriteBatch, (int)(track.getPlayer().getSpeed() * 40) + " KMH", 15, 50);
-            long time = track.getPlayer().getTime();
-            int seconds = (int)(time % 3600) / 60;
-            int millis = (int)(time % 60) * 100 / 60;
-            timeFont.draw(spriteBatch, time / 3600 + ":" + (seconds < 10 ? "0" : "") +
-                    seconds + "." + (millis < 10 ? "0" : "") + millis , 550, 450);
+            timerFont.draw(spriteBatch, Integer.toString((int)Math.ceil(track.getTimer() / 60f)) , 15, 450);
             spriteBatch.end();
         }
     }

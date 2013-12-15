@@ -116,7 +116,7 @@ public class CarSelectScreen extends GameScreen {
 
         if (tardisCheat) {
             spriteBatch.draw(selectBox, 320, 50);
-            tardisAnimator.draw(spriteBatch, 330, 40);
+            tardisAnimator.draw(spriteBatch, 330, 60);
         } else {
             spriteBatch.draw(selectBox, selectX, selectY);
         }

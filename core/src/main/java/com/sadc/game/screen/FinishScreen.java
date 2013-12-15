@@ -16,6 +16,8 @@ public class FinishScreen extends GameScreen {
     private String successText = "Quite Good!";
     private String failText = "Bollocks, you are just awful.";
     private String recordText = "Jolly good! You set a record! Enter your initials.";
+    private Texture chav1;
+    private Texture happyFamily;
     private String initials = "";
     private String finishTimeString;
     private long finishTime;
@@ -37,6 +39,8 @@ public class FinishScreen extends GameScreen {
 
     public FinishScreen(String finishTimeString, long finishTime, final boolean success, final String currentLevel, final int levelNumber){
         this.levelNumber = levelNumber;
+        chav1 = new Texture("chav.jpg");
+        happyFamily = new Texture("happy.png");
         sky = new Texture("datNightSky.png");
         levelName = currentLevel;
         this.success = success;
@@ -121,6 +125,9 @@ public class FinishScreen extends GameScreen {
         font.draw(spriteBatch, textToDisplay, 60, 400);
         if (this.success){
             font.draw(spriteBatch, "Total Time: "+ finishTimeString, 60, 375);
+            spriteBatch.draw(happyFamily, 400, 0);
+        } else {
+            spriteBatch.draw(chav1, 400, 40);
         }
         if (recordSet){
 
@@ -136,6 +143,8 @@ public class FinishScreen extends GameScreen {
     public void dispose(){
         font.dispose();
         generator.dispose();
+        chav1.dispose();
+        happyFamily.dispose();
     }
 
 }

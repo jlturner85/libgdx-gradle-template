@@ -66,7 +66,7 @@ public class Racer {
 
         triggerDistance = distance - 7;
 
-        texture = new Texture("car.png");
+        texture = new Texture("doubleDecker.png");
         explosionTexture = new Texture("explosion_6frames.png");
         explosionAnimator = new Animator(explosionTexture, EXPLOSION_SPRITE_COLUMNS, EXPLOSION_SPRITE_ROWS, EXPLOSION_FRAME_DURATION);
 

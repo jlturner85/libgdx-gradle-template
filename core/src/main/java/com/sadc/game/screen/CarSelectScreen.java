@@ -17,14 +17,14 @@ public class CarSelectScreen extends GameScreen {
     private Texture car3 = new Texture("car3_4frame.png");
     private Texture car4 = new Texture("car4_4frame.png");
     private Texture car5 = new Texture("car5_4frame.png");
-    //private Texture tardis = new Texture("tardis.png");
+    private Texture tardis = new Texture("tardis_4frame.png");
     private Texture selectBox;
     private Animator car1Animator;
     private Animator car2Animator;
     private Animator car3Animator;
     private Animator car4Animator;
     private Animator car5Animator;
-    //private Animator tardisAnimator;
+    private Animator tardisAnimator;
     private int currentLevelPosition = 0;
     private float selectX;
     private float selectY = 190;
@@ -39,7 +39,7 @@ public class CarSelectScreen extends GameScreen {
         car3Animator = new Animator(car3, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
         car4Animator = new Animator(car4, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
         car5Animator = new Animator(car5, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
-        //tardisAnimator = new Animator(tardis, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
+        tardisAnimator = new Animator(tardis, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
     }
 
     @Override
@@ -115,8 +115,8 @@ public class CarSelectScreen extends GameScreen {
         car5Animator.draw(spriteBatch, 485, 200);
 
         if (tardisCheat) {
-            //spriteBatch.draw(selectBox, 320, 50);
-            //tardisAnimator.draw(spriteBatch, 330, 40);
+            spriteBatch.draw(selectBox, 320, 50);
+            tardisAnimator.draw(spriteBatch, 330, 40);
         } else {
             spriteBatch.draw(selectBox, selectX, selectY);
         }

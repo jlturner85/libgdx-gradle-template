@@ -25,12 +25,12 @@ import com.sadc.game.screen.GameplayScreen;
 /**
  * @author f536985 (Tom Farello)
  */
-public class TrackOne extends Track {
+public class TrackTwo extends Track {
 
-    public TrackOne(GameplayScreen screen) {
+    public TrackTwo(GameplayScreen screen) {
         super(screen);
-        setTimer(3600);
-        setTrackName("Liverpool Street");
+        setTimer(4500);
+        setTrackName("Paddington");
         setTunnel1(new Texture("tunnel1.png"));
         setTunnel2(new Texture("tunnel2.png"));
         setTunnelFrames(8);
@@ -225,7 +225,7 @@ public class TrackOne extends Track {
         objects.add(new Boost(403, -60));
         objects.add(new Boost(406, 90));
         racers.add(new Racer(406, 0));
-        objects.add(new Wall(409, -135));
+        objects.add(new Wall(409, -150));
         objects.add(new Boost(409, -105));
         objects.add(new Boost(412, 105));
         objects.add(new Wall(418, 105));

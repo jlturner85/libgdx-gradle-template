@@ -47,6 +47,11 @@ public class GameplayScreen extends GameScreen{
         this.screenDone = true;
     }
 
+    public void fail(long time, String trackName) {
+        this.nextGameScreen = new FinishScreen(GameUtils.framesToTimeString(time), time, false, trackName);
+        this.screenDone = true;
+    }
+
     @Override
     public void dispose() {
         generator.dispose();

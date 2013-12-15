@@ -61,13 +61,13 @@ public class Player {
 //    private Texture walkerTexture;
 //    private Animator walkerAnimator;
 
-    public Player(int playerNum, Track track) {
+    public Player(int playerNum, Track track, int selectedCar) {
         this.track = track;
 
         distance = 0;
         speed = 0;
-        topSpeed = 5;
-        acceleration = 0.002f;
+        topSpeed = 4 + selectedCar;
+        acceleration = 0.003f - (0.001f * selectedCar);
         angle = 0;
         spin = 0;
         boost = 1;
@@ -88,7 +88,7 @@ public class Player {
         thirdGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_3_0.wav"));
         fourthGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_4_0.wav"));*/
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
-        texture = new Texture("car1_4frame.png");
+        texture = new Texture("car" + (selectedCar + 1) + "_4frame.png");
         explosionTexture = new Texture("explosion_6frames.png");
         carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
         explosionAnimator = new Animator(explosionTexture, EXPLOSION_SPRITE_COLUMNS, EXPLOSION_SPRITE_ROWS, EXPLOSION_FRAME_DURATION);

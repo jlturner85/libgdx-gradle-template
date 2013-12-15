@@ -42,40 +42,12 @@ public class Track {
     public Track(GameplayScreen screen) {
         this.screen = screen;
 
-        /*tunnel1 = new Texture("tunnel1.png");
-        tunnel2 = new Texture("tunnel2.png");
-        tunnelFrames = 8;*/
         background = new Texture("datNightSky.png");
         fade = new Texture("fade.png");
 
-        player = new Player(1, this);
+        player = new Player(1, this, GameConstants.CURRENT_SELECTED_CAR);
         objects = new ArrayList<TrackObject>();
         racers = new ArrayList<Racer>();
-
-        //debug
-        /*timer = 3600;
-        for (int i = 1; i < 100; i++) {
-            if (i % 2 == 0) {
-                Boost b = new Boost(i * 8, ((i * 30) % 360) - 180);
-                objects.add(b);
-            } else {
-                Wall w = new Wall(i * 8, ((i * 30) % 360) - 180);
-                objects.add(w);
-            }
-        }
-        for (int i = 1; i < 50; i++) {
-            Racer r = new Racer(i * 4, 45);
-            racers.add(r);
-        }
-        MissingTrack mt = new MissingTrack(3, 130, MissingTrack.TOP);
-        objects.add(mt);
-        Checkpoint checkpoint = new Checkpoint(75, 1800);
-        Checkpoint finish = new Checkpoint(150);
-        objects.add(checkpoint);
-        objects.add(finish);
-        BackgroundChange bg = new BackgroundChange(5, 1);
-        objects.add(bg);
-        trackName = "leaderboard";*/
     }
 
     public void bonusTime(int bonusFrames) {
@@ -84,6 +56,10 @@ public class Track {
 
     public void finish() {
         screen.finish(time, trackName);
+    }
+
+    public void fail() {
+        screen.fail(time, trackName);
     }
 
     public void changeBackground(Texture texture) {
@@ -107,6 +83,9 @@ public class Track {
         }
         timer--;
         time++;
+        if (timer <= 0) {
+            fail();
+        }
         player.update(delta);
         for (TrackObject o : objects) {
             o.update(delta, player);

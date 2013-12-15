@@ -24,12 +24,19 @@ public class LeaderboardScreen extends GameScreen {
     private final Texture chavPicture;
     private final Texture chav2Picture;
     private ArrayList[] leaderboardListArray = new ArrayList[GameConstants.NUMBER_OF_TRACKS];
+    private String [] trackNameArray = new String[GameConstants.NUMBER_OF_TRACKS];
     private ArrayList<LeaderboardListing> currentLeaderBoardList;
     private String currentTrackName;
+    private int currentLevelPosition = 0;
     public LeaderboardScreen(){
         chavPicture = new Texture("chav.jpg");
         chav2Picture = new Texture("chav2.jpg");
+        trackNameArray[0] = GameConstants.TRACK_1_NAME;
+        trackNameArray[1] = GameConstants.TRACK_2_NAME;
+        trackNameArray[2] = GameConstants.TRACK_3_NAME;
         leaderboardListArray[0]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_1_LEADERBOARD);
+        leaderboardListArray[1]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_2_LEADERBOARD);
+        leaderboardListArray[2]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_3_LEADERBOARD);
         currentLeaderBoardList = leaderboardListArray[0];
         currentTrackName = GameConstants.TRACK_1_NAME;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Minecraftia.ttf"));
@@ -66,12 +73,34 @@ public class LeaderboardScreen extends GameScreen {
         boolean exit = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
         boolean p1Enter = Gdx.input.isKeyPressed(GameConstants.P1_B);
         boolean p2Enter = Gdx.input.isKeyPressed(GameConstants.P2_B);
+        boolean p1Left = Gdx.input.isKeyPressed(GameConstants.P1_LEFT);
+        boolean p1Right = Gdx.input.isKeyPressed(GameConstants.P1_RIGHT);
 
         if ((exit && !GameConstants.OLD_ESCAPE_PRESSED) || (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED)
                 || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
             this.nextGameScreen = new MenuScreen();
             this.screenDone = true;
         }
+
+        if (p1Left && !GameConstants.OLD_P1_LEFT_PRESSED){
+            if (currentLevelPosition > 0){
+                currentLevelPosition = currentLevelPosition - 1;
+            } else {
+                currentLevelPosition = leaderboardListArray.length - 1;
+            }
+            currentLeaderBoardList = leaderboardListArray[currentLevelPosition];
+            currentTrackName = trackNameArray[currentLevelPosition];
+        } else if (p1Right && !GameConstants.OLD_P1_RIGHT_PRESSED){
+            if (currentLevelPosition < leaderboardListArray.length - 1){
+                currentLevelPosition = currentLevelPosition + 1;
+            } else {
+                currentLevelPosition = 0;
+            }
+            currentLeaderBoardList = leaderboardListArray[currentLevelPosition];
+            currentTrackName = trackNameArray[currentLevelPosition];
+        }
+        GameConstants.OLD_P1_LEFT_PRESSED = Gdx.input.isKeyPressed(GameConstants.P1_LEFT);
+        GameConstants.OLD_P1_RIGHT_PRESSED = Gdx.input.isKeyPressed(GameConstants.P1_RIGHT);
         GameConstants.OLD_P1_ENTER_PRESSED = p1Enter;
         GameConstants.OLD_P2_ENTER_PRESSED = p2Enter;
         GameConstants.OLD_ESCAPE_PRESSED = exit;

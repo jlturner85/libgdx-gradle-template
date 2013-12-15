@@ -15,13 +15,20 @@ public class CarSelectScreen extends GameScreen {
     private Texture car1= new Texture("car1_4frame.png");
     private Texture car2 = new Texture("car2_4frame.png");
     private Texture car3 = new Texture("car3_4frame.png");
+    private Texture car4 = new Texture("car4_4frame.png");
+    private Texture car5 = new Texture("car5_4frame.png");
+    //private Texture tardis = new Texture("tardis.png");
     private Texture selectBox;
     private Animator car1Animator;
     private Animator car2Animator;
     private Animator car3Animator;
+    private Animator car4Animator;
+    private Animator car5Animator;
+    //private Animator tardisAnimator;
     private int currentLevelPosition = 0;
     private float selectX;
     private float selectY = 190;
+    private boolean tardisCheat = false;
     private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
     public CarSelectScreen(){
         font = generator.generateFont(GameConstants.MENU_FONT_SIZE);
@@ -30,6 +37,9 @@ public class CarSelectScreen extends GameScreen {
         car1Animator = new Animator(car1, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
         car2Animator = new Animator(car2, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
         car3Animator = new Animator(car3, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
+        car4Animator = new Animator(car4, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
+        car5Animator = new Animator(car5, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
+        //tardisAnimator = new Animator(tardis, GameConstants.CAR1_SPRITE_COLUMNS, GameConstants.CAR1_SPRITE_ROWS, GameConstants.CAR1_FRAME_DURATION);
     }
 
     @Override
@@ -43,8 +53,15 @@ public class CarSelectScreen extends GameScreen {
             this.screenDone = true;
         }
 
+        if (Gdx.input.isKeyPressed(GameConstants.P1_X) && Gdx.input.isKeyPressed(GameConstants.P1_DOWN)){
+            tardisCheat = true;
+        }
         if (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) {
-            GameConstants.CURRENT_SELECTED_CAR = currentLevelPosition;
+            if (tardisCheat){
+                GameConstants.CURRENT_SELECTED_CAR = 5;
+            } else {
+                GameConstants.CURRENT_SELECTED_CAR = currentLevelPosition;
+            }
             this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.LevelSelectScreen");
             this.screenDone = true;
         }
@@ -53,11 +70,11 @@ public class CarSelectScreen extends GameScreen {
             if (currentLevelPosition > 0){
                 currentLevelPosition = currentLevelPosition - 1;
             } else {
-                currentLevelPosition = 2;
+                currentLevelPosition = 4;
             }
 
         } else if (p1Right && !GameConstants.OLD_P1_RIGHT_PRESSED){
-            if (currentLevelPosition < 2){
+            if (currentLevelPosition < 4){
                 currentLevelPosition = currentLevelPosition + 1;
             } else {
                 currentLevelPosition = 0;
@@ -65,13 +82,19 @@ public class CarSelectScreen extends GameScreen {
         }
         switch(currentLevelPosition){
             case 0:
-                selectX = 140;
+                selectX = 115;
                 break;
             case 1:
-                selectX = 290;
+                selectX = 205;
                 break;
             case 2:
-                selectX = 440;
+                selectX = 295;
+                break;
+            case 3:
+                selectX = 385;
+                break;
+            case 4:
+                selectX = 475;
                 break;
         }
         GameConstants.OLD_P1_LEFT_PRESSED = Gdx.input.isKeyPressed(GameConstants.P1_LEFT);
@@ -85,10 +108,18 @@ public class CarSelectScreen extends GameScreen {
         spriteBatch.begin();
         spriteBatch.draw(sky, 0, 0);
         font.draw(spriteBatch, "Select your car", 230, 400);
-        car1Animator.draw(spriteBatch, 150, 200);
-        car2Animator.draw(spriteBatch, 300, 200);
-        car3Animator.draw(spriteBatch, 450, 200);
-        spriteBatch.draw(selectBox, selectX, selectY);
+        car1Animator.draw(spriteBatch, 125, 200);
+        car2Animator.draw(spriteBatch, 215, 200);
+        car3Animator.draw(spriteBatch, 305, 200);
+        car4Animator.draw(spriteBatch, 395, 200);
+        car5Animator.draw(spriteBatch, 485, 200);
+
+        if (tardisCheat) {
+            //spriteBatch.draw(selectBox, 320, 50);
+            //tardisAnimator.draw(spriteBatch, 330, 40);
+        } else {
+            spriteBatch.draw(selectBox, selectX, selectY);
+        }
         spriteBatch.end();
     }
 

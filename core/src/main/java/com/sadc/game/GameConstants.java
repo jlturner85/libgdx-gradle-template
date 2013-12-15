@@ -51,9 +51,13 @@ public class GameConstants {
     public static boolean OLD_ESCAPE_PRESSED = false;
     public static Sound currentMusic;
     public static final float MUSIC_VOLUME = 0.1f;
-    public static final int NUMBER_OF_TRACKS = 1;
-    public static final String TRACK_1_LEADERBOARD = "leaderboard.txt";
-    public static final String TRACK_1_NAME = "Track 1";
+    public static final int NUMBER_OF_TRACKS = 3;
+    public static final String TRACK_1_LEADERBOARD = "Liverpool Street.txt";
+    public static final String TRACK_2_LEADERBOARD = "Paddington.txt";
+    public static final String TRACK_3_LEADERBOARD = "Arsenal.txt";
+    public static final String TRACK_1_NAME = "Liverpool St.";
+    public static final String TRACK_2_NAME = "Paddington";
+    public static final String TRACK_3_NAME = "Arsenal";
     public static final String[] INITIAL_CHARACTER_ARRAY= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
             , "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     public static final int CAR1_SPRITE_ROWS = 2;

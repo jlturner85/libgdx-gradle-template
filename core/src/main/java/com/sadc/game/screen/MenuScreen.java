@@ -58,7 +58,7 @@ public class MenuScreen  extends GameScreen{
         lightPole = new Texture("lightPole.png");
         skyLine = new Texture("slyline.png");
         sky = new Texture("datNightSky.png");
-        moon = new Texture("glowMoon.png");
+        moon = new Texture("alotGlowMoon.png");
         cloud1 = new Texture("cloud1.png");
         cloud2 = new Texture("cloud2.png");
         cloud3 = new Texture("cloud3.png");

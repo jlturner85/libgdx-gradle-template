@@ -18,6 +18,9 @@ public class Player {
     private static final int CAR_SPRITE_ROWS = 2;
     private static final int CAR_SPRITE_COLUMNS = 2;
     private static final float CAR_FRAME_DURATION = 0.1f;
+    private static final int EXPLOSION_SPRITE_ROWS = 2;
+    private static final int EXPLOSION_SPRITE_COLUMNS = 3;
+    private static final float EXPLOSION_FRAME_DURATION = 0.5f;
 //    private static final int WALK_SPRITE_ROWS = 5;
 //    private static final int WALK_SPRITE_COLUMNS = 6;
 //    private static final float WALK_FRAME_DURATION = 0.07f;
@@ -49,6 +52,8 @@ public class Player {
     private Texture texture;
 
     private Animator carAnimator;
+    private Texture explosionTexture;
+    private Animator explosionAnimator;
 //    private Texture walkerTexture;
 //    private Animator walkerAnimator;
 
@@ -80,7 +85,9 @@ public class Player {
         long id = firstGearSound.play(0.5f);
         firstGearSound.setLooping(id, true);
         texture = new Texture("car1_4frame.png");
+        explosionTexture = new Texture("explosion_6frames.png");
         carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
+        explosionAnimator = new Animator(explosionTexture, EXPLOSION_SPRITE_COLUMNS, EXPLOSION_SPRITE_ROWS, EXPLOSION_FRAME_DURATION);
 //        walkerTexture = new Texture("animation_sheet.png");
 //        walkerAnimator = new Animator(walkerTexture, WALK_SPRITE_COLUMNS, WALK_SPRITE_ROWS, WALK_FRAME_DURATION);
     }
@@ -174,6 +181,9 @@ public class Player {
 //            walkerAnimator.draw(spriteBatch, 50,50);
 //            spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
 //                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
+        } else {
+            explosionAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);
         }
     }
 

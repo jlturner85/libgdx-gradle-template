@@ -30,7 +30,7 @@ public class TrackOne extends Track {
     public TrackOne(GameplayScreen screen) {
         super(screen);
         setTimer(3600);
-        setTrackName("Cockfosters");
+        setTrackName("Liverpool Street");
         setTunnel1(new Texture("tunnel1.png"));
         setTunnel2(new Texture("tunnel2.png"));
         setTunnelFrames(8);
@@ -254,10 +254,58 @@ public class TrackOne extends Track {
         objects.add(new Wall(465, -120));
         objects.add(new Boost(470, -150));
         objects.add(new Wall(475, 180));
-        objects.add(new Boost(470, 135));
+        objects.add(new Boost(480, 135));
+
+        objects.add(new Boost(485, 0));
+        objects.add(new Boost(485, 90));
+        objects.add(new Boost(485, 180));
+        objects.add(new Boost(485, -90));
+        racers.add(new Racer(485, 120));
+        racers.add(new Racer(485, -60));
+        objects.add(new Boost(490, 135));
+        racers.add(new Racer(492.5f, 30));
+        objects.add(new Boost(495, -45));
+        objects.add(new Boost(500, 0));
+        racers.add(new Racer(500, -30));
+        objects.add(new Boost(505, 120));
+        racers.add(new Racer(512.5f, 180));
+        objects.add(new Boost(510, -90));
+
+        objects.add(new Boost(520, 120));
+        objects.add(new Boost(520, -120));
+        objects.add(new Boost(522, 90));
+        objects.add(new Boost(522, -90));
+        objects.add(new Boost(524, 60));
+        objects.add(new Boost(524, -60));
 
         objects.add(new MissingTrack(525, 100, MissingTrack.TOP));
+        racers.add(new Racer(530, 80));
+        racers.add(new Racer(530, -80));
+        objects.add(new Boost(530, 0));
+        objects.add(new Wall(537, 75));
+        objects.add(new Wall(537, -75));
+        objects.add(new Boost(545, 60));
+        objects.add(new Wall(550, 30));
+        objects.add(new Boost(545, 60));
+        objects.add(new Wall(552.5f, 60));
+        objects.add(new Wall(552.5f, -60));
+        objects.add(new Wall(557, 0));
+        objects.add(new Boost(562, -45));
+        objects.add(new Boost(564, 0));
+        objects.add(new Boost(566, 45));
+        objects.add(new Wall(568, -30));
+        objects.add(new Boost(571, 60));
+        objects.add(new Boost(573, 0));
+        objects.add(new Boost(575, -60));
 
+        objects.add(new Wall(585, -75));
+        objects.add(new Wall(585, -45));
+        objects.add(new Wall(585, -15));
+        objects.add(new Boost(585, 30));
+        objects.add(new Wall(595, 75));
+        objects.add(new Wall(595, 45));
+        objects.add(new Wall(595, 15));
+        objects.add(new Boost(595, -30));
     }
 
 }

@@ -48,6 +48,9 @@ public class GameplayScreen extends GameScreen{
             GameConstants.currentMusic.setLooping(id, true);
             track = new TrackTwo(this);
         } else if (GameConstants.CURRENT_SELECTED_LEVEL == 2) {
+            GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("Level3.mp3"));
+            long id = GameConstants.currentMusic.play(0.05f);
+            GameConstants.currentMusic.setLooping(id, true);
             track = new TrackThree(this);
         }
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));

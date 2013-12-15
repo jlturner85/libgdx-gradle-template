@@ -82,14 +82,12 @@ public class Player {
             rightKey = GameConstants.P2_RIGHT;
             brakeKey = GameConstants.P2_B;
         }
-        idleSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_0.wav"));
+        /*idleSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_0.wav"));
         firstGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_1_0.wav"));
         secondGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_2_0.wav"));
         thirdGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_3_0.wav"));
-        fourthGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_4_0.wav"));
-        explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
-        long id = firstGearSound.play(0.5f);
-        firstGearSound.setLooping(id, true);
+        fourthGearSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/car/loop_4_0.wav"));*/
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
         texture = new Texture("car1_4frame.png");
         explosionTexture = new Texture("explosion_6frames.png");
         carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
@@ -122,6 +120,7 @@ public class Player {
             speed = 0;
             explosion = true;
         }
+        explosionSound.play();
     }
 
     public void bonusTime(int bonusFrames) {
@@ -139,11 +138,12 @@ public class Player {
     public void dispose() {
         texture.dispose();
 //        walkerTexture.dispose();
-        idleSound.dispose();
+        /*idleSound.dispose();
         firstGearSound.dispose();
         secondGearSound.dispose();
         thirdGearSound.dispose();
-        fourthGearSound.dispose();
+        fourthGearSound.dispose(); */
+        explosionSound.dispose();
     }
 
     public void update(float delta) {

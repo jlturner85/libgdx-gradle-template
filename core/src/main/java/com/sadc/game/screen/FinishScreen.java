@@ -92,7 +92,18 @@ public class FinishScreen extends GameScreen {
             GameConstants.OLD_P1_LEFT_PRESSED = Gdx.input.isKeyPressed(GameConstants.P1_LEFT);
             GameConstants.OLD_P1_RIGHT_PRESSED = Gdx.input.isKeyPressed(GameConstants.P1_RIGHT);
             GameConstants.OLD_P1_ENTER_PRESSED = Gdx.input.isKeyPressed(GameConstants.P1_B);
+        } else {
+
+            boolean exit = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
+            boolean p1Enter = Gdx.input.isKeyPressed(GameConstants.P1_B);
+            if ((exit && !GameConstants.OLD_ESCAPE_PRESSED) || (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED)) {
+                this.nextGameScreen = new MenuScreen();
+                this.screenDone = true;
+            }
+            GameConstants.OLD_P1_ENTER_PRESSED = p1Enter;
+            GameConstants.OLD_ESCAPE_PRESSED = exit;
         }
+
     }
 
     @Override

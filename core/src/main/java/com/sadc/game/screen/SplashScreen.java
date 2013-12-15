@@ -33,7 +33,14 @@ public class SplashScreen extends GameScreen {
 
     @Override
     public void update(float delta) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        boolean exit = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
+        boolean p1Enter = Gdx.input.isKeyPressed(GameConstants.P1_B);
+        if ((exit && !GameConstants.OLD_ESCAPE_PRESSED) || (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED)) {
+            this.nextGameScreen = new MenuScreen();
+            this.screenDone = true;
+        }
+        GameConstants.OLD_P1_ENTER_PRESSED = p1Enter;
+        GameConstants.OLD_ESCAPE_PRESSED = exit;
     }
 
     @Override

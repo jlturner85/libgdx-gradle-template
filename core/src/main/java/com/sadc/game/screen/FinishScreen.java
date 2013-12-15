@@ -11,17 +11,6 @@ import com.sadc.game.gameobject.LeaderboardListing;
 
 import java.util.ArrayList;
 
-/**
- * Created with IntelliJ IDEA.
- * Copyright (c) 2013 HEB
- * All rights reserved.
- * <p/>
- * Class Description:
- *
- * @author Justin Turner (t590035)
- *         Date: 12/14/13
- */
-
 public class FinishScreen extends GameScreen {
     private String successText = "Quite Good!";
     private String failText = "Bollocks, you are terrible.";

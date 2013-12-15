@@ -3,6 +3,7 @@ package com.sadc.game.gameobject.trackobject;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.gameobject.Player;
+import com.sadc.game.gameobject.Racer;
 
 /**
  * @author f536985 (Tom Farello)
@@ -28,6 +29,12 @@ public abstract class TrackObject {
     public boolean collide(Player player) {
         float angleDiff = Math.abs(angle - player.getAngle()) % 360;
         return active && (Math.abs(distance - player.getDistance()) < (player.getSpeed() + 1) / 70f &&
+                (angleDiff < width || angleDiff > 360 - width));
+    }
+
+    public boolean collide(Racer racer) {
+        float angleDiff = Math.abs(angle - racer.getAngle()) % 360;
+        return active && (Math.abs(distance - racer.getDistance()) < (racer.getSpeed() + 1) / 70f &&
                 (angleDiff < width || angleDiff > 360 - width));
     }
 

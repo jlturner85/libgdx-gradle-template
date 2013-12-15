@@ -59,4 +59,5 @@ public class GameConstants {
     public static final int CAR1_SPRITE_ROWS = 2;
     public static final int CAR1_SPRITE_COLUMNS = 2;
     public static final float CAR1_FRAME_DURATION = 0.1f;
+    public static int CURRENT_SELECTED_CAR;
 }

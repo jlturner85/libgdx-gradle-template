@@ -100,8 +100,7 @@ public class MenuScreen  extends GameScreen{
                         exitHighlighted();
                     } else if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
                         //show the credits screen
-                        //this.nextGameScreen = new CreditsScreen();
-                        this.nextGameScreen = new FinishScreen("",1,true,"");
+                        this.nextGameScreen = new CreditsScreen();
                         this.screenDone = true;
                     }
                     break;

@@ -26,6 +26,9 @@ public class Train extends TrackObject {
     private float triggerDistance;
     private boolean triggered;
 
+    private boolean trainSoundPlayed;
+    private boolean trackWhistlePlayed;
+
     private int numCars;
     private Sound trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-pass-by-01.mp3"));
     private Sound trainWhistle = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-whistle-01.mp3"));
@@ -78,7 +81,7 @@ public class Train extends TrackObject {
             setDistance(getDistance() - (speed / 60f));
             if (collide(player)) {
                 player.crash(240);
-                this.dispose();
+                setActive(false);
             }
         } else if (player.getDistance() >= triggerDistance) {
             triggered = true;
@@ -87,28 +90,41 @@ public class Train extends TrackObject {
 
     @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
-        for (int i = numCars - 1; i >= 0; i--) {
-            float distance = getDistance() + 2 * i;
-            float drawDistance = (float)Math.pow(2 , playerDistance - (distance + 4f / 3));
-            GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
-            if (drawDistance <= 1) {
-                spriteBatch.draw(insideTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
-                        175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
-            }
-            drawDistance = (float)Math.pow(2 , playerDistance - distance);
-            GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
-            if (drawDistance <= 1) {
-                spriteBatch.draw(i == 0 ? frontTexture : middleTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
-                        175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
-            }
-            if (i == 0) {
-                GameUtils.setColorByDrawDistance(1, spriteBatch);
+        if (isActive()) {
+            for (int i = numCars - 1; i >= 0; i--) {
+                float distance = getDistance() + 2 * i;
+                float drawDistance = (float)Math.pow(2 , playerDistance - (distance + 4f / 3));
+                GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
                 if (drawDistance <= 1) {
-                    spriteBatch.draw(lightsTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
+                    spriteBatch.draw(insideTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
                             175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
+                }
+                drawDistance = (float)Math.pow(2 , playerDistance - distance);
+                GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
+                if (drawDistance <= 1) {
+                    spriteBatch.draw(i == 0 ? frontTexture : middleTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
+                            175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
+                }
+                if (i == 0) {
+                    GameUtils.setColorByDrawDistance(1, spriteBatch);
+                    if (drawDistance <= 1) {
+                        spriteBatch.draw(lightsTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
+                                175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
+                    }
                 }
             }
         }
 
+        if (getDistance() - playerDistance < 12 && !trainSoundPlayed) {
+            trainSoundPlayed = true;
+            trainSound.play();
+        }
+        if (getDistance() - playerDistance < 2 && !trackWhistlePlayed) {
+            trackWhistlePlayed = true;
+            trainWhistle.play();
+        }
+        if (getDistance() - playerDistance < -2 * (numCars + 2)) {
+            trainSound.stop();
+        }
     }
 }

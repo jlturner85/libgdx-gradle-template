@@ -74,7 +74,8 @@ public class Train extends TrackObject {
     @Override
     public void update(float delta, Player player) {
         if (triggered) {
-            setDistance(getDistance() - 1f / 120f);
+            float speed = Math.max(0, player.getSpeed() - 7);
+            setDistance(getDistance() - (speed / 60f));
             if (collide(player)) {
                 player.crash(240);
                 this.dispose();

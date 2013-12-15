@@ -42,9 +42,16 @@ public class GameConstants {
     public static final int P2_EXTRA_BUTTON_2 = Keys.L;
     public static boolean OLD_P1_ENTER_PRESSED = false;
     public static boolean OLD_P2_ENTER_PRESSED = false;
+    public static boolean OLD_P1_LEFT_PRESSED = false;
+    public static boolean OLD_P1_RIGHT_PRESSED = false;
     public static final String LONDON_FONT = "boston.ttf";
     public static final int MENU_FONT_SIZE = 20;
     public static boolean OLD_ESCAPE_PRESSED = false;
     public static Sound currentMusic;
     public static final float MUSIC_VOLUME = 0.1f;
+    public static final int NUMBER_OF_TRACKS = 1;
+    public static final String TRACK_1_LEADERBOARD = "leaderboard.txt";
+    public static final String TRACK_1_NAME = "Track 1";
+    public static final String[] INITIAL_CHARACTER_ARRAY= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
+            , "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 }

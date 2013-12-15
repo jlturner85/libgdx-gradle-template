@@ -27,15 +27,14 @@ public class CreditsScreen extends GameScreen {
         boolean exit = Gdx.input.isKeyPressed(GameConstants.ESCAPE_KEY);
         boolean p1Enter = Gdx.input.isKeyPressed(GameConstants.P1_B);
         boolean p2Enter = Gdx.input.isKeyPressed(GameConstants.P2_B);
-        if (exit){
-            Gdx.app.exit();
-        }
-        if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
+        if ((exit && !GameConstants.OLD_ESCAPE_PRESSED) || (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED)
+                || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
             this.nextGameScreen = new MenuScreen();
             this.screenDone = true;
         }
         GameConstants.OLD_P1_ENTER_PRESSED = p1Enter;
         GameConstants.OLD_P2_ENTER_PRESSED = p2Enter;
+        GameConstants.OLD_ESCAPE_PRESSED = exit;
     }
 
     @Override

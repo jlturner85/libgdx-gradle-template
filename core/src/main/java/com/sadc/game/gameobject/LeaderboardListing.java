@@ -8,6 +8,15 @@ package com.sadc.game.gameobject;
 public class LeaderboardListing {
     private String name;
     private String score;
+    private long finishTime;
+
+    public long getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(long finishTime) {
+        this.finishTime = finishTime;
+    }
 
     public String getName() {
         return name;
@@ -25,4 +34,8 @@ public class LeaderboardListing {
         this.score = score;
     }
 
+    @Override
+    public final String toString(){
+        return score + "-" + name + "-" + Long.toString(finishTime);
+    }
 }

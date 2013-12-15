@@ -1,1 +1,1 @@
-100-Justin:90-Gerald:80-Tom:70-Chris:60-Leon:50-Mike:40-Gary:30-Peter:20-Danny:10-Fernando
+1:05-BAD-105,1:30-Justin-130,1:40-Gerald-140,1:50-Tom-150,1:55-Chris-155,2:00-Leon-200,2:05-Mike-205,2:06-Gary-206,2:10-Peter-210,2:20-Danny-220

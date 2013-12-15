@@ -80,7 +80,7 @@ public class GameplayScreen extends GameScreen{
             spriteBatch.begin();
             spriteBatch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             track.draw(delta, spriteBatch);
-            kphFont.draw(spriteBatch, (int)(track.getPlayer().getSpeed() * 40) + " KMH", 15, 50);
+            kphFont.draw(spriteBatch, (int)(track.getPlayer().getSpeed() * 40) + " KPH", 15, 50);
             timerFont.draw(spriteBatch, Integer.toString((int)Math.ceil(track.getTimer() / 60f)) , 15, 450);
             if (track.getBonusFrames() > 0) {
                 timerFont.draw(spriteBatch, "TIME EXTENDED!" , 100, 250);

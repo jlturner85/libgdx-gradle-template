@@ -104,7 +104,11 @@ public class Player {
     }
 
     public void crash() {
-        timeout = 120;
+        crash(120);
+    }
+
+    public void crash(int timeout) {
+        this.timeout = timeout;
         speed = 0;
         angle = 0;
         spin = 0;

@@ -22,7 +22,6 @@ import com.sadc.game.gameobject.Player;
  */
 public class Train extends TrackObject {
 
-    private int timeout;
     private int numCars;
     private Sound trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-pass-by-01.mp3"));
     private Sound trainWhistle = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-whistle-01.mp3"));
@@ -63,19 +62,13 @@ public class Train extends TrackObject {
     public void update(float delta, Player player) {
         setDistance(getDistance() - 1f / 120f);
         if (collide(player)) {
-            player.crash();
-            setActive(false);
-            timeout = 240;
+            player.crash(240);
+            this.dispose();
         }
     }
 
     @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
-        if (timeout > 0) {
-            timeout--;
-        } else {
-            setActive(true);
-        }
         for (int i = numCars - 1; i >= 0; i--) {
             float distance = getDistance() + 2 * i;
             float drawDistance = (float)Math.pow(2 , playerDistance - (distance + 4f / 3));

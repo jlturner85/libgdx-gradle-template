@@ -30,9 +30,7 @@ public class GameplayScreen extends GameScreen{
     public GameplayScreen() {
         GameConstants.currentMusic.stop();
         GameConstants.currentMusic.dispose();
-        GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
-        long id = GameConstants.currentMusic.play(0.05f);
-        GameConstants.currentMusic.setLooping(id, true);
+
 
         spriteBatch = new SpriteBatch();
         kphFont = generator.generateFont(32);
@@ -40,7 +38,13 @@ public class GameplayScreen extends GameScreen{
 
         if (GameConstants.CURRENT_SELECTED_LEVEL == 0) {
             track = new TrackOne(this);
+            GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
+            long id = GameConstants.currentMusic.play(0.05f);
+            GameConstants.currentMusic.setLooping(id, true);
         } else if (GameConstants.CURRENT_SELECTED_LEVEL == 1) {
+            GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("Level2.mp3"));
+            long id = GameConstants.currentMusic.play(0.05f);
+            GameConstants.currentMusic.setLooping(id, true);
             track = new TrackTwo(this);
         }
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
@@ -48,12 +52,12 @@ public class GameplayScreen extends GameScreen{
     }
 
     public void finish(long time, String trackName) {
-        this.nextGameScreen = new FinishScreen(GameUtils.framesToTimeString(time), time, true, trackName);
+        this.nextGameScreen = new FinishScreen(GameUtils.framesToTimeString(time), time, true, trackName, GameConstants.CURRENT_SELECTED_LEVEL);
         this.screenDone = true;
     }
 
     public void fail(long time, String trackName) {
-        this.nextGameScreen = new FinishScreen(GameUtils.framesToTimeString(time), time, false, trackName);
+        this.nextGameScreen = new FinishScreen(GameUtils.framesToTimeString(time), time, false, trackName, GameConstants.CURRENT_SELECTED_LEVEL);
         this.screenDone = true;
     }
 

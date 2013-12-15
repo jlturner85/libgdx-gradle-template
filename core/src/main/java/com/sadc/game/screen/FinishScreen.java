@@ -29,16 +29,18 @@ public class FinishScreen extends GameScreen {
     private String currentSelectedLetter = GameConstants.INITIAL_CHARACTER_ARRAY[0];
     private int numberOfSelectedLetters = 0;
     private String levelName;
+    private int levelNumber;
     private int recordPlacement;
     private String[] initialsArray = {"", "", ""};
     private ArrayList<LeaderboardListing> leaderboardListings;
     private boolean success = false;
 
-    public FinishScreen(String finishTimeString, long finishTime, final boolean success, final String currentLevel){
+    public FinishScreen(String finishTimeString, long finishTime, final boolean success, final String currentLevel, final int levelNumber){
+        this.levelNumber = levelNumber;
         sky = new Texture("datNightSky.png");
         levelName = currentLevel;
         this.success = success;
-        leaderboardListings = GameUtils.getLeaderBoardListing("leaderboard.txt");
+        leaderboardListings = GameUtils.getLeaderBoardListing(currentLevel + ".txt");
         if (success){
             int i = 0;
             for (LeaderboardListing leaderboardListing: leaderboardListings){
@@ -90,7 +92,7 @@ public class FinishScreen extends GameScreen {
                 } else {
                     GameUtils.writeNewScoresToLeaderboard(levelName + ".txt", recordPlacement, initialsArray[0]
                             + initialsArray[1] + initialsArray[2], finishTime, finishTimeString, leaderboardListings);
-                    nextGameScreen = new LeaderboardScreen();
+                    nextGameScreen = new LeaderboardScreen(levelName, levelNumber);
                     screenDone = true;
                 }
             }

@@ -28,7 +28,7 @@ public class LeaderboardScreen extends GameScreen {
     private ArrayList<LeaderboardListing> currentLeaderBoardList;
     private String currentTrackName;
     private int currentLevelPosition = 0;
-    public LeaderboardScreen(){
+    public LeaderboardScreen(final String levelName, int levelNumber){
         chavPicture = new Texture("chav.jpg");
         chav2Picture = new Texture("chav2.jpg");
         trackNameArray[0] = GameConstants.TRACK_1_NAME;
@@ -37,8 +37,8 @@ public class LeaderboardScreen extends GameScreen {
         leaderboardListArray[0]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_1_LEADERBOARD);
         leaderboardListArray[1]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_2_LEADERBOARD);
         leaderboardListArray[2]= GameUtils.getLeaderBoardListing(GameConstants.TRACK_3_LEADERBOARD);
-        currentLeaderBoardList = leaderboardListArray[0];
-        currentTrackName = GameConstants.TRACK_1_NAME;
+        currentLeaderBoardList = leaderboardListArray[levelNumber];
+        currentTrackName = levelName;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Minecraftia.ttf"));
         titleFont = generator.generateFont(40);
         font = generator.generateFont(GameConstants.MENU_FONT_SIZE);

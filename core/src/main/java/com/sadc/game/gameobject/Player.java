@@ -15,9 +15,9 @@ import com.sadc.game.util.GameUtil;
  */
 public class Player {
 
-    private static final int CAR_SPRITE_ROWS = 1;
+    private static final int CAR_SPRITE_ROWS = 2;
     private static final int CAR_SPRITE_COLUMNS = 2;
-    private static final float CAR_FRAME_DURATION = 0.2f;
+    private static final float CAR_FRAME_DURATION = 0.1f;
 //    private static final int WALK_SPRITE_ROWS = 5;
 //    private static final int WALK_SPRITE_COLUMNS = 6;
 //    private static final float WALK_FRAME_DURATION = 0.07f;
@@ -79,7 +79,7 @@ public class Player {
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
         long id = firstGearSound.play(0.5f);
         firstGearSound.setLooping(id, true);
-        texture = new Texture("cars_br.png");
+        texture = new Texture("car1_4frame.png");
         carAnimator = new Animator(texture, this.CAR_SPRITE_COLUMNS, this.CAR_SPRITE_ROWS, this.CAR_FRAME_DURATION);
 //        walkerTexture = new Texture("animation_sheet.png");
 //        walkerAnimator = new Animator(walkerTexture, WALK_SPRITE_COLUMNS, WALK_SPRITE_ROWS, WALK_FRAME_DURATION);

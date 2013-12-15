@@ -103,8 +103,10 @@ public class MenuScreen  extends GameScreen{
         float cloudSpeed = .2f;
         float reset = -375f;
         float moonSpeed = .03f;
-        moonX= moonX - moonSpeed;
-        moonY= moonY + moonSpeed;
+        if(moonY<325){
+            moonX= moonX - moonSpeed;
+            moonY= moonY + moonSpeed;
+        }
         float overLap = 800f;
 
         backCloud1X = checkCloudOverlap(backCloud1X, overLap, reset, cloudSpeed);

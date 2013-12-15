@@ -2,6 +2,7 @@ package com.sadc.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -18,6 +19,7 @@ public class FinishScreen extends GameScreen {
     private String initials = "";
     private String finishTimeString;
     private long finishTime;
+    private Texture sky;
     private boolean recordSet = false;
     private String textToDisplay;
     private BitmapFont font;
@@ -30,9 +32,12 @@ public class FinishScreen extends GameScreen {
     private int recordPlacement;
     private String[] initialsArray = {"", "", ""};
     private ArrayList<LeaderboardListing> leaderboardListings;
+    private boolean success = false;
 
     public FinishScreen(String finishTimeString, long finishTime, final boolean success, final String currentLevel){
+        sky = new Texture("datNightSky.png");
         levelName = currentLevel;
+        this.success = success;
         leaderboardListings = GameUtils.getLeaderBoardListing("leaderboard.txt");
         if (success){
             int i = 0;
@@ -110,8 +115,13 @@ public class FinishScreen extends GameScreen {
     public void draw(float delta) {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
+        spriteBatch.draw(sky, 0, 0);
         font.draw(spriteBatch, textToDisplay, 60, 400);
+        if (this.success){
+            font.draw(spriteBatch, "Total Time: "+ finishTimeString, 60, 375);
+        }
         if (recordSet){
+
             initialsArray[numberOfSelectedLetters] = currentSelectedLetter;
             font.draw(spriteBatch, initialsArray[0], 250, 300);
             font.draw(spriteBatch, initialsArray[1], 265, 300);

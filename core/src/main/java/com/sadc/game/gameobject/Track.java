@@ -11,6 +11,7 @@ import com.sadc.game.gameobject.trackobject.Checkpoint;
 import com.sadc.game.gameobject.trackobject.TrackObject;
 import com.sadc.game.gameobject.trackobject.Train;
 import com.sadc.game.gameobject.trackobject.Wall;
+import com.sadc.game.screen.GameplayScreen;
 
 /**
  * Don't tell me when to write Javadocs
@@ -21,7 +22,11 @@ public class Track {
 
     private static final int TOTAL_FRAMES = 8;
 
+    private GameplayScreen screen;
+
     private int timer;
+    private long time;
+    private int bonusFrames;
     private String trackName;
 
     private List<TrackObject> objects;
@@ -30,11 +35,13 @@ public class Track {
     private final Texture tunnel1;
     private final Texture tunnel2;
 
-    public Track() {
+    public Track(GameplayScreen screen) {
+        this.screen = screen;
+
         tunnel1 = new Texture("tunnel1.png");
         tunnel2 = new Texture("tunnel2.png");
 
-        player = new Player(1);
+        player = new Player(1, this);
 
         //debug
         timer = 3600;
@@ -52,9 +59,19 @@ public class Track {
             Train t = new Train(i * 25, 4);
             objects.add(t);
         }*/
-        Checkpoint finish = new Checkpoint(25, 30);
+        Checkpoint checkpoint = new Checkpoint(20, 1800);
+        Checkpoint finish = new Checkpoint(35);
+        objects.add(checkpoint);
         objects.add(finish);
         trackName = "Test Track";
+    }
+
+    public void bonusTime(int bonusFrames) {
+        this.bonusFrames = bonusFrames;
+    }
+
+    public void finish() {
+        screen.finish(time, trackName);
     }
 
     public void dispose() {
@@ -67,7 +84,13 @@ public class Track {
     }
 
     public void update(float delta) {
+        if (bonusFrames > 0) {
+            int frames = Math.min(bonusFrames, 20);
+            timer += frames;
+            bonusFrames -= frames;
+        }
         timer--;
+        time++;
         player.update(delta);
         for (TrackObject o : objects) {
             o.update(delta, player);
@@ -103,6 +126,9 @@ public class Track {
     }
     public int getTimer() {
         return timer;
+    }
+    public int getBonusFrames() {
+        return bonusFrames;
     }
 
 }

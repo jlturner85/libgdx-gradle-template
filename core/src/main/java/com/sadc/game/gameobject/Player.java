@@ -24,6 +24,8 @@ public class Player {
 //    private static final int WALK_SPRITE_COLUMNS = 6;
 //    private static final float WALK_FRAME_DURATION = 0.07f;
 
+    private Track track;
+
     private Sound idleSound;
     private Sound firstGearSound;
     private Sound secondGearSound;
@@ -42,6 +44,7 @@ public class Player {
 
     private float boost;
     private float dBoost;
+
     private int timeout;
 
     private int leftKey;
@@ -56,7 +59,9 @@ public class Player {
 //    private Texture walkerTexture;
 //    private Animator walkerAnimator;
 
-    public Player(int playerNum) {
+    public Player(int playerNum, Track track) {
+        this.track = track;
+
         distance = 0;
         speed = 0;
         topSpeed = 5;
@@ -105,6 +110,14 @@ public class Player {
         spin = 0;
         boost = 1;
         dBoost = 0;
+    }
+
+    public void bonusTime(int bonusFrames) {
+        track.bonusTime(bonusFrames);
+    }
+
+    public void finish() {
+        track.finish();
     }
 
     public void dispose() {

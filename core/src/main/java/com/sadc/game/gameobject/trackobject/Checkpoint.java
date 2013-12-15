@@ -21,14 +21,14 @@ import com.sadc.game.gameobject.Player;
 public class Checkpoint extends TrackObject {
 
     private boolean finishLine;
-    private int bonusSeconds;
+    private int bonusFrames;
 
     private Texture check1;
     private Texture check2;
 
     public Checkpoint(float distance) {
         finishLine = true;
-        bonusSeconds = 0;
+        bonusFrames = 0;
         setActive(true);
         setDistance(distance);
         setAngle(0);
@@ -37,9 +37,9 @@ public class Checkpoint extends TrackObject {
         check2 = new Texture("finish2.png");
     }
 
-    public Checkpoint(float distance, int bonusSeconds) {
+    public Checkpoint(float distance, int bonusFrames) {
         finishLine = false;
-        this.bonusSeconds = bonusSeconds;
+        this.bonusFrames = bonusFrames;
         setActive(true);
         setDistance(distance);
         setAngle(0);
@@ -49,7 +49,22 @@ public class Checkpoint extends TrackObject {
     }
 
     @Override
-    public void update(float delta, Player player) { }
+    public void dispose() {
+        check1.dispose();
+        check2.dispose();
+    }
+
+    @Override
+    public void update(float delta, Player player) {
+        if (collide(player)) {
+            setActive(false);
+            if (finishLine) {
+                player.finish();
+            } else {
+                player.bonusTime(bonusFrames);
+            }
+        }
+    }
 
     @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {

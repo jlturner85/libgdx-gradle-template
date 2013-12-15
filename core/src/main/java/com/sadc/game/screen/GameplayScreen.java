@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.sadc.game.GameConstants;
+import com.sadc.game.gameobject.GameUtils;
 import com.sadc.game.gameobject.Track;
 
 public class GameplayScreen extends GameScreen{
@@ -35,9 +36,14 @@ public class GameplayScreen extends GameScreen{
         kphFont = generator.generateFont(32);
         timerFont = generator.generateFont(56);
 
-        track = new Track();
+        track = new Track(this);
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
         hitSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
+    }
+
+    public void finish(long time, String trackName) {
+        this.nextGameScreen = new FinishScreen(GameUtils.framesToTimeString(time), time, true, trackName);
+        this.screenDone = true;
     }
 
     @Override
@@ -76,6 +82,9 @@ public class GameplayScreen extends GameScreen{
             track.draw(delta, spriteBatch);
             kphFont.draw(spriteBatch, (int)(track.getPlayer().getSpeed() * 40) + " KMH", 15, 50);
             timerFont.draw(spriteBatch, Integer.toString((int)Math.ceil(track.getTimer() / 60f)) , 15, 450);
+            if (track.getBonusFrames() > 0) {
+                timerFont.draw(spriteBatch, "TIME EXTENDED!" , 100, 250);
+            }
             spriteBatch.end();
         }
     }

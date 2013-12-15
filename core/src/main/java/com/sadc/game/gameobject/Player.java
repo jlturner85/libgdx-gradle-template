@@ -47,6 +47,7 @@ public class Player {
 
     private boolean explosion;
     private int timeout;
+    private int invulnerability;
     private int fallOff;
 
     private int leftKey;
@@ -66,8 +67,8 @@ public class Player {
 
         distance = 0;
         speed = 0;
-        topSpeed = 4 + selectedCar;
-        acceleration = 0.003f - (0.001f * selectedCar);
+        topSpeed = 4 + selectedCar / 2f;
+        acceleration = 0.003f - (0.0005f * selectedCar);
         angle = 0;
         spin = 0;
         boost = 1;
@@ -107,6 +108,7 @@ public class Player {
         if (timeout <= 0) {
             fallOff = 1;
             timeout = 120;
+            invulnerability = 240;
         }
     }
 
@@ -115,12 +117,15 @@ public class Player {
     }
 
     public void crash(int timeout) {
-        if (this.timeout <= 0) {
-            this.timeout = timeout;
-            speed = 0;
-            explosion = true;
+        if (invulnerability <= 0) {
+            if (this.timeout <= 0) {
+                this.timeout = timeout;
+                invulnerability = timeout + 120;
+                speed = 0;
+                explosion = true;
+            }
+            explosionSound.play();
         }
-        explosionSound.play();
     }
 
     public void bonusTime(int bonusFrames) {
@@ -148,6 +153,9 @@ public class Player {
 
     public void update(float delta) {
         time++;
+        if (invulnerability > 0) {
+            invulnerability--;
+        }
         if (fallOff > 0) {
             speed -= acceleration * 20;
             if (speed < 0) {

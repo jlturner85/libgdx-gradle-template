@@ -38,8 +38,8 @@ public class TrackTwo extends Track {
         List<TrackObject> objects = getObjects();
         List<Racer> racers = getRacers();
 
-        objects.add(new Checkpoint(175, 1800));
-        objects.add(new Checkpoint(350, 1800));
+        objects.add(new Checkpoint(175, 2400));
+        objects.add(new Checkpoint(350, 2400));
         objects.add(new Checkpoint(600)); // finish line
 
         objects.add(new Boost(5, 0));
@@ -138,8 +138,6 @@ public class TrackTwo extends Track {
 
         objects.add(new Boost(205, 180));
         objects.add(new Train(212.5f, 3));
-        objects.add(new Wall(215, -105));
-        objects.add(new Wall(218, -145));
 
         racers.add(new Racer(220, 0));
         objects.add(new Boost(220, 180));
@@ -164,6 +162,8 @@ public class TrackTwo extends Track {
         objects.add(new Boost(288, 180));
 
         objects.add(new Train(295, 4));
+        objects.add(new Wall(297.5f, -105));
+        objects.add(new Wall(300.5f, -145));
 
         objects.add(new Wall(305, -120));
         objects.add(new Wall(306, -135));
@@ -268,16 +268,18 @@ public class TrackTwo extends Track {
         racers.add(new Racer(492.5f, 30));
         objects.add(new Boost(495, -45));
         objects.add(new Boost(500, 0));
-        racers.add(new Racer(500, -30));
-        objects.add(new Boost(505, 120));
-        racers.add(new Racer(512.5f, 180));
-        objects.add(new Boost(510, -90));
 
-        objects.add(new Boost(515, 120));
-        objects.add(new Boost(515, -120));
+        objects.add(new Boost(505, 120));
+        objects.add(new Boost(505, -120));
         objects.add(new Train(515, 5));
 
-        objects.add(new MissingTrack(525, 100, MissingTrack.TOP));
+        objects.add(new Wall(524, 180));
+        objects.add(new Wall(526, 135));
+        objects.add(new Wall(526, -135));
+        objects.add(new Wall(528, -90));
+        objects.add(new Wall(528, 90));
+
+        objects.add(new MissingTrack(530, 100, MissingTrack.TOP));
         racers.add(new Racer(530, 80));
         racers.add(new Racer(530, -80));
         objects.add(new Boost(530, 0));

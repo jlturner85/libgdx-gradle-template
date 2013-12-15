@@ -11,6 +11,7 @@ package com.sadc.game.gameobject.trackobject;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.gameobject.Player;
+import com.sadc.game.gameobject.Racer;
 
 /**
  * @author f536985 (Tom Farello)
@@ -18,8 +19,8 @@ import com.sadc.game.gameobject.Player;
 public class MissingTrack extends TrackObject {
 
     public static int TOP = 1;
-    public static int BOTTOM = 2;
-    public static int LEFT = 3;
+    public static int LEFT = 2;
+    public static int BOTTOM = 3;
     public static int RIGHT = 4;
 
     private float length;
@@ -28,7 +29,7 @@ public class MissingTrack extends TrackObject {
     public MissingTrack(float distance, float length, int side) {
         setActive(true);
         setDistance(distance);
-        setAngle(0);
+        setAngle(90 * side - 270);
         setWidth(90);
 
         this.length = length;
@@ -44,12 +45,20 @@ public class MissingTrack extends TrackObject {
     }
 
     @Override
+    public boolean collide(Racer racer) {
+        float angleDiff = Math.abs(getAngle() - racer.getAngle()) % 360;
+        return isActive() && ((Math.abs(getDistance() - racer.getDistance()) < (racer.getSpeed() + 1) / 70f ||
+                (racer.getDistance() - getDistance() > 0 && racer.getDistance() - getDistance() < length)) &&
+                (angleDiff < getWidth() || angleDiff > 360 - getWidth()));
+    }
+
+    @Override
     public void dispose() { }
 
     @Override
     public void update(float delta, Player player) {
         if (collide(player)) {
-            //player.fallOff();
+            player.fallOff();
         }
     }
 

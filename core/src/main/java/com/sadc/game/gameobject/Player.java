@@ -45,7 +45,9 @@ public class Player {
     private float boost;
     private float dBoost;
 
+    private boolean explosion;
     private int timeout;
+    private int fallOff;
 
     private int leftKey;
     private int rightKey;
@@ -103,17 +105,23 @@ public class Player {
         dBoost = GameConstants.D_BOOST;
     }
 
+    public void fallOff() {
+        if (timeout <= 0) {
+            fallOff = 1;
+            timeout = 120;
+        }
+    }
+
     public void crash() {
         crash(120);
     }
 
     public void crash(int timeout) {
-        this.timeout = timeout;
-        speed = 0;
-        angle = 0;
-        spin = 0;
-        boost = 1;
-        dBoost = 0;
+        if (this.timeout <= 0) {
+            this.timeout = timeout;
+            speed = 0;
+            explosion = true;
+        }
     }
 
     public void bonusTime(int bonusFrames) {
@@ -136,7 +144,33 @@ public class Player {
 
     public void update(float delta) {
         time++;
+        if (fallOff > 0) {
+            speed -= acceleration * 10;
+            distance += speed / 60f;
+            fallOff++;
+            if (speed < 0) {
+                speed = 0;
+                angle = 0;
+            }
+
+            if (spin > 0) {
+                spin -= GameConstants.FRICTION;
+                if (spin < 0) {
+                    spin = 0;
+                }
+            } else if (spin < 0) {
+                spin += GameConstants.FRICTION;
+                if (spin > 0) {
+                    spin = 0;
+                }
+            }
+
+            angle += spin;
+            while (angle > 180) angle -= 360;
+            while (angle < -180) angle += 360;
+        }
         if (timeout <= 0) {
+            fallOff = 0;
             if (Gdx.input.isKeyPressed(brakeKey)) {
                 speed -= acceleration * 35;
                 if (speed < 0) {
@@ -186,20 +220,29 @@ public class Player {
             while (angle < -180) angle += 360;
         } else {
             timeout--;
+            if (timeout == 0) {
+                angle = 0;
+                spin = 0;
+                boost = 1;
+                dBoost = 0;
+                explosion = false;
+            }
         }
     }
 
     public void draw (float delta, SpriteBatch spriteBatch) {
-        if (timeout <= 0) {
+        if (explosion) {
+            explosionAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);
+        } else {
             GameUtils.setColorByDrawDistance(1, spriteBatch);
-            carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
-                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);//, 0, 0, 50, 50, false, false);
+            if (fallOff > 0)
+                System.out.println(fallOff);
+            carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15 - (float)Math.pow(fallOff, 1.55),
+                    25, (GameConstants.SCREEN_HEIGHT / 2) - 15 + (float)Math.pow(fallOff, 1.55), 50, 50, (float)Math.pow(0.975f, fallOff), (float)Math.pow(0.975f, fallOff), angle);//, 0, 0, 50, 50, false, false);
 //            walkerAnimator.draw(spriteBatch, 50,50);
 //            spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
 //                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle, 0, 0, 50, 50, false, false);
-        } else {
-            explosionAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
-                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);
         }
     }
 

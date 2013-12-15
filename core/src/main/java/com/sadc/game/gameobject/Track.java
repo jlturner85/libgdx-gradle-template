@@ -31,6 +31,7 @@ public class Track {
     private String trackName;
 
     private List<TrackObject> objects;
+    private List<Racer> racers;
     private Player player;
 
     private final Texture tunnel1;
@@ -56,17 +57,18 @@ public class Track {
                 objects.add(w);
             }
         }
-        /*for (int i = 1; i < 10; i++) {
-            Train t = new Train(i * 25, 4);
-            objects.add(t);
-        }*/
+        racers = new ArrayList<Racer>();
+        for (int i = 1; i < 30; i++) {
+            Racer r = new Racer(i * 12, i * 40);
+            racers.add(r);
+        }
         MissingTrack mt = new MissingTrack(3, 3, MissingTrack.TOP);
         objects.add(mt);
         Checkpoint checkpoint = new Checkpoint(75, 1800);
         Checkpoint finish = new Checkpoint(150);
         objects.add(checkpoint);
         objects.add(finish);
-        trackName = "Test Track";
+        trackName = "leaderboard";
     }
 
     public void bonusTime(int bonusFrames) {
@@ -98,13 +100,16 @@ public class Track {
         for (TrackObject o : objects) {
             o.update(delta, player);
         }
+        for (Racer r : racers) {
+            r.update(delta, player, objects);
+        }
     }
 
     public void draw(float delta, SpriteBatch spriteBatch) {
         float distance = player.getDistance();
         float trackDistance = 1 + (distance % 0.125f);
         int frame = TOTAL_FRAMES - 1 - (int) ((distance / 0.125f) % TOTAL_FRAMES);
-        float scale = 2.117920011581067f;
+        float scale = 1.6f;
         for (int i = 0; i < 50; i++) {
             Texture texture;
             if (i % TOTAL_FRAMES == frame) {
@@ -127,6 +132,9 @@ public class Track {
         }
         for (TrackObject o : objects) {
             o.draw(delta, player.getDistance(), spriteBatch);
+        }
+        for (Racer r : racers) {
+            r.draw(delta, player.getDistance(), spriteBatch);
         }
         player.draw(delta, spriteBatch);
     }

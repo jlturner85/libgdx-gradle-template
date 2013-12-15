@@ -16,11 +16,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.GameUtils;
 import com.sadc.game.gameobject.Player;
+import com.sadc.game.gameobject.Racer;
 
 /**
  * @author f536985 (Tom Farello)
  */
 public class Train extends TrackObject {
+
+    private float triggerDistance;
+    private boolean triggered;
 
     private int numCars;
     private Sound trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-pass-by-01.mp3"));
@@ -35,6 +39,7 @@ public class Train extends TrackObject {
         setDistance(distance);
         setAngle(0);
         setWidth(100);
+        triggerDistance = distance - 10;
 
         this.numCars = numCars;
         frontTexture = new Texture("kickAssTrain.png");
@@ -52,6 +57,14 @@ public class Train extends TrackObject {
     }
 
     @Override
+    public boolean collide(Racer racer) {
+        float angleDiff = Math.abs(getAngle() - racer.getAngle()) % 360;
+        return isActive() && ((Math.abs(getDistance() - racer.getDistance()) < (racer.getSpeed() + 1) / 70f ||
+                (racer.getDistance() - getDistance() > 0 && racer.getDistance() - getDistance() < 2 * numCars)) &&
+                (angleDiff < getWidth() || angleDiff > 360 - getWidth()));
+    }
+
+    @Override
     public void dispose() {
         frontTexture.dispose();
         insideTexture.dispose();
@@ -60,10 +73,14 @@ public class Train extends TrackObject {
 
     @Override
     public void update(float delta, Player player) {
-        setDistance(getDistance() - 1f / 120f);
-        if (collide(player)) {
-            player.crash(240);
-            this.dispose();
+        if (triggered) {
+            setDistance(getDistance() - 1f / 120f);
+            if (collide(player)) {
+                player.crash(240);
+                this.dispose();
+            }
+        } else if (player.getDistance() >= triggerDistance) {
+            triggered = true;
         }
     }
 

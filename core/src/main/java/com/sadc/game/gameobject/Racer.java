@@ -1,18 +1,10 @@
-/*
- * $Id$
- *
- * Copyright (c) 2013 HEB
- * All rights reserved.
- *
- * This software is the confidential and proprietary information
- * of HEB.
- */
 package com.sadc.game.gameobject;
 
 import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
@@ -28,10 +20,18 @@ import com.sadc.game.gameobject.trackobject.Wall;
  */
 public class Racer {
 
+    private static final int CAR_SPRITE_ROWS = 2;
+    private static final int CAR_SPRITE_COLUMNS = 2;
+    private static final float CAR_FRAME_DURATION = 0.1f;
+    private static final int EXPLOSION_SPRITE_ROWS = 2;
+    private static final int EXPLOSION_SPRITE_COLUMNS = 3;
+    private static final float EXPLOSION_FRAME_DURATION = 0.5f;
+
     private boolean active;
     private boolean triggered;
     private float triggerDistance;
     private int fallOff;
+    private int timeout;
 
     private float distance;
     private float speed;
@@ -44,12 +44,16 @@ public class Racer {
     private float dBoost;
 
     private Texture texture;
+    private Texture explosionTexture;
+    private Animator explosionAnimator;
+    private Sound explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
 
     private int action;
     private int nextAction;
     private Random random;
 
     public Racer(float distance, float angle) {
+        timeout = 0;
         active = true;
         this.distance = distance;
         speed = 1;
@@ -63,6 +67,8 @@ public class Racer {
         triggerDistance = distance - 7;
 
         texture = new Texture("car.png");
+        explosionTexture = new Texture("explosion_6frames.png");
+        explosionAnimator = new Animator(explosionTexture, EXPLOSION_SPRITE_COLUMNS, EXPLOSION_SPRITE_ROWS, EXPLOSION_FRAME_DURATION);
 
         action = 0;
         nextAction = 0;
@@ -86,16 +92,28 @@ public class Racer {
         fallOff = 1;
     }
 
-    public void crash() {
+    public void crash(float playerDistance) {
+        timeout = 120;
+        float soundVolume = (float)Math.pow(2 , playerDistance - (distance));
+        if (soundVolume > 1) {
+            soundVolume = 1f / (soundVolume * soundVolume);
+        }
+        explosionSound.play(soundVolume);
         active = false;
     }
 
     public void dispose() {
         texture.dispose();
+        explosionTexture.dispose();
+        explosionAnimator.dispose();
+        explosionSound.dispose();
     }
 
     public void update(float delta, Player player, List<TrackObject> objects) {
         if (triggered) {
+            if (timeout > 0) {
+                timeout--;
+            }
             if (fallOff > 0) {
                 speed -= acceleration * 10;
                 distance += speed / 60f;
@@ -135,12 +153,12 @@ public class Racer {
                 }
 
                 if (action == -1) {
-                    spin -= GameConstants.TORQUE;
-                    if (spin < -GameConstants.MAX_SPIN) spin = -GameConstants.MAX_SPIN;
+                    spin -= GameConstants.TORQUE / 3f;
+                    if (spin < -GameConstants.MAX_SPIN / 2f) spin = -GameConstants.MAX_SPIN / 2f;
                 }
                 if (action == 1) {
-                    spin += GameConstants.TORQUE;
-                    if (spin > GameConstants.MAX_SPIN) spin = GameConstants.MAX_SPIN;
+                    spin += GameConstants.TORQUE / 3f;
+                    if (spin > GameConstants.MAX_SPIN / 2f) spin = GameConstants.MAX_SPIN / 2f;
                 }
                 if (action == 0) {
                     if (spin > 0) {
@@ -172,12 +190,12 @@ public class Racer {
                         } else if (o instanceof MissingTrack) {
                             fallOff();
                         } else if (o instanceof Wall || o instanceof Train) {
-                            crash();
+                            crash(player.getDistance());
                         }
                     }
                 }
                 if (collide(player)) {
-                    crash();
+                    crash(player.getDistance());
                     player.crash();
                 }
             }
@@ -187,12 +205,15 @@ public class Racer {
     }
 
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
-        if (active) {
-            float drawDistance = (float)Math.pow(2 , playerDistance - (distance));
-            GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
+        float drawDistance = (float)Math.pow(2 , playerDistance - (distance));
+        GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
+        if (timeout > 0) {
+            explosionAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
+                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, drawDistance, drawDistance, angle);
+        } else if (active) {
             spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15 - (float)Math.pow(fallOff, 1.55),
                     25, GameConstants.SCREEN_HEIGHT / 2 - 15 + (float)Math.pow(fallOff, 1.55), 50, 50,
-                    drawDistance * (float)Math.pow(0.975f, fallOff), drawDistance* (float)Math.pow(0.975f, fallOff), angle, 0, 0, 50, 50, false, false);
+                    drawDistance * (float)Math.pow(0.975f, fallOff), drawDistance * (float)Math.pow(0.975f, fallOff), angle, 0, 0, 50, 50, false, false);
         }
     }
 

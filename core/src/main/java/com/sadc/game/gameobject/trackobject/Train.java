@@ -32,6 +32,7 @@ public class Train extends TrackObject {
     private int numCars;
     private Sound trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-pass-by-01.mp3"));
     private Sound trainWhistle = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-whistle-01.mp3"));
+    private Sound explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
     private Texture frontTexture;
     private Texture insideTexture;
     private Texture middleTexture;
@@ -82,6 +83,9 @@ public class Train extends TrackObject {
             if (collide(player)) {
                 player.crash(240);
                 setActive(false);
+                trainSound.stop();
+                trainWhistle.stop();
+                explosionSound.play();
             }
         } else if (player.getDistance() >= triggerDistance) {
             triggered = true;

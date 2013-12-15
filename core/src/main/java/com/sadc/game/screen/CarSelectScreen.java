@@ -45,7 +45,7 @@ public class CarSelectScreen extends GameScreen {
         }
 
         if (p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) {
-            this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.GameplayScreen");
+            this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.LevelSelectScreen");
             this.screenDone = true;
         }
         GameConstants.OLD_P1_ENTER_PRESSED = p1Enter;

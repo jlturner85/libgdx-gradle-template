@@ -9,6 +9,8 @@
  */
 package com.sadc.game.gameobject.trackobject;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
@@ -22,7 +24,8 @@ public class Train extends TrackObject {
 
     private int timeout;
     private int numCars;
-
+    private Sound trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-pass-by-01.mp3"));
+    private Sound trainWhistle = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-whistle-01.mp3"));
     private Texture frontTexture;
     private Texture insideTexture;
     private Texture middleTexture;

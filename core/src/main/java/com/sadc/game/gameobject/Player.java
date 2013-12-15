@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.animation.Animator;
+import com.sadc.game.util.GameUtil;
 
 /**
  * Fuck Javadocs.
@@ -167,6 +168,7 @@ public class Player {
 
     public void draw (float delta, SpriteBatch spriteBatch) {
         if (timeout <= 0) {
+            GameUtil.setColorByDrawDistance(1, spriteBatch);
             carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
                     25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);//, 0, 0, 50, 50, false, false);
 //            walkerAnimator.draw(spriteBatch, 50,50);

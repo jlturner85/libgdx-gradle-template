@@ -27,7 +27,7 @@ public abstract class TrackObject {
 
     public boolean collide(Player player) {
         float angleDiff = Math.abs(angle - player.getAngle()) % 360;
-        return active && (Math.abs(distance - player.getDistance()) < player.getSpeed() / 50f &&
+        return active && (Math.abs(distance - player.getDistance()) < (player.getSpeed() + 1) / 70f &&
                 (angleDiff < width || angleDiff > 360 - width));
     }
 

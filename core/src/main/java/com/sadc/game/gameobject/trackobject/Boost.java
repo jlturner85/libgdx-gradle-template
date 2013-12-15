@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.Player;
+import com.sadc.game.util.GameUtil;
 
 /**
  * @author f536985 (Tom Farello)
@@ -27,8 +28,9 @@ public class Boost extends TrackObject {
 
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
         float drawDistance = (float)Math.pow(2 , playerDistance - (getDistance()));
+        GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
         spriteBatch.draw(getTexture(), GameConstants.SCREEN_WIDTH / 2 - 30, 15,
-                30, GameConstants.SCREEN_HEIGHT / 2 - 30, 60, 60, drawDistance, drawDistance, getAngle(), 0, 0, 60, 60, false, false);
+                30, GameConstants.SCREEN_HEIGHT / 2 - 15, 60, 60, drawDistance, drawDistance, getAngle(), 0, 0, 60, 60, false, false);
     }
 
 }

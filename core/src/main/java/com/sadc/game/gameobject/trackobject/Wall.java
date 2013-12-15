@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.Player;
+import com.sadc.game.util.GameUtil;
 
 /**
  * @author f536985 (Tom Farello)
@@ -29,7 +30,8 @@ public class Wall extends TrackObject {
     @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
         float drawDistance = (float)Math.pow(2 , playerDistance - (getDistance()));
+        GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
         spriteBatch.draw(getTexture(), GameConstants.SCREEN_WIDTH / 2 - 50, 15,
-                50, GameConstants.SCREEN_HEIGHT / 2 - 35, 100, 70, drawDistance, drawDistance, getAngle(), 0, 0, 100, 70, false, false);
+                50, GameConstants.SCREEN_HEIGHT / 2 - 15, 100, 70, drawDistance, drawDistance, getAngle(), 0, 0, 100, 70, false, false);
     }
 }

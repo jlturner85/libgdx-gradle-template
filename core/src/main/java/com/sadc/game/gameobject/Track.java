@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.trackobject.Boost;
 import com.sadc.game.gameobject.trackobject.TrackObject;
+import com.sadc.game.gameobject.trackobject.Train;
 import com.sadc.game.gameobject.trackobject.Wall;
+import com.sadc.game.util.GameUtil;
 
 /**
  * Don't tell me when to write Javadocs
@@ -26,12 +28,10 @@ public class Track {
 
     private final Texture tunnel1;
     private final Texture tunnel2;
-    private final Texture fade;
 
     public Track() {
         tunnel1 = new Texture("tunnel1.png");
         tunnel2 = new Texture("tunnel2.png");
-        fade = new Texture("fade.png");
 
         player = new Player(1);
 
@@ -47,13 +47,16 @@ public class Track {
                 objects.add(w);
             }
         }
+        for (int i = 1; i < 10; i++) {
+            Train t = new Train(i * 25, 4);
+            objects.add(t);
+        }
 
     }
 
     public void dispose() {
         tunnel1.dispose();
         tunnel2.dispose();
-        fade.dispose();
         player.dispose();
         for (TrackObject o : objects) {
             o.dispose();
@@ -69,7 +72,7 @@ public class Track {
 
     public void draw(float delta, SpriteBatch spriteBatch) {
         float distance = player.getDistance();
-        float drawDistance = 1 + (distance % 0.087f);
+        float trackDistance = 1 + (distance % 0.087f);
         int frame = TOTAL_FRAMES - 1 - (int) ((distance / 0.087f) % TOTAL_FRAMES);
         float scale = 2.117920011581067f;
         for (int i = 0; i < 50; i++) {
@@ -79,16 +82,15 @@ public class Track {
             } else {
                 texture = tunnel1;
             }
+            float drawDistance = trackDistance * scale;
+            GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
             spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 250, GameConstants.SCREEN_HEIGHT / 2 - 250,
-                    250, 250, 500, 500, drawDistance * scale, drawDistance * scale, 0, 0, 0, 500, 500, false, false);
+                    250, 250, 500, 500, drawDistance, drawDistance, 0, 0, 0, 500, 500, false, false);
             scale *= 0.92f;
         }
         for (TrackObject o : objects) {
             o.draw(delta, player.getDistance(), spriteBatch);
         }
-
-        spriteBatch.draw(fade, GameConstants.SCREEN_WIDTH / 2 - 25, GameConstants.SCREEN_HEIGHT / 2 - 25,
-                25, 25, 50, 50, 1, 1, 0, 0, 0, 50, 50, false, false);
         player.draw(delta, spriteBatch);
     }
 

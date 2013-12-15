@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
+import com.sadc.game.gameobject.trackobject.BackgroundChange;
 import com.sadc.game.gameobject.trackobject.Boost;
 import com.sadc.game.gameobject.trackobject.Checkpoint;
 import com.sadc.game.gameobject.trackobject.MissingTrack;
@@ -21,8 +22,6 @@ import com.sadc.game.screen.GameplayScreen;
  */
 public class Track {
 
-    private static final int TOTAL_FRAMES = 8;
-
     private GameplayScreen screen;
 
     private int timer;
@@ -34,20 +33,27 @@ public class Track {
     private List<Racer> racers;
     private Player player;
 
-    private final Texture tunnel1;
-    private final Texture tunnel2;
+    private Texture tunnel1;
+    private Texture tunnel2;
+    private int tunnelFrames;
+    private Texture background;
+    private Texture fade;
 
     public Track(GameplayScreen screen) {
         this.screen = screen;
 
-        tunnel1 = new Texture("tunnel1.png");
+        /*tunnel1 = new Texture("tunnel1.png");
         tunnel2 = new Texture("tunnel2.png");
+        tunnelFrames = 8;*/
+        background = new Texture("datNightSky.png");
+        fade = new Texture("fade.png");
 
         player = new Player(1, this);
+        objects = new ArrayList<TrackObject>();
+        racers = new ArrayList<Racer>();
 
         //debug
-        timer = 3600;
-        objects = new ArrayList<TrackObject>();
+        /*timer = 3600;
         for (int i = 1; i < 100; i++) {
             if (i % 2 == 0) {
                 Boost b = new Boost(i * 8, ((i * 30) % 360) - 180);
@@ -57,18 +63,19 @@ public class Track {
                 objects.add(w);
             }
         }
-        racers = new ArrayList<Racer>();
-        for (int i = 1; i < 30; i++) {
-            Racer r = new Racer(i * 12, i * 40);
+        for (int i = 1; i < 50; i++) {
+            Racer r = new Racer(i * 4, 45);
             racers.add(r);
         }
-        MissingTrack mt = new MissingTrack(3, 3, MissingTrack.TOP);
+        MissingTrack mt = new MissingTrack(3, 130, MissingTrack.TOP);
         objects.add(mt);
         Checkpoint checkpoint = new Checkpoint(75, 1800);
         Checkpoint finish = new Checkpoint(150);
         objects.add(checkpoint);
         objects.add(finish);
-        trackName = "leaderboard";
+        BackgroundChange bg = new BackgroundChange(5, 1);
+        objects.add(bg);
+        trackName = "leaderboard";*/
     }
 
     public void bonusTime(int bonusFrames) {
@@ -77,6 +84,10 @@ public class Track {
 
     public void finish() {
         screen.finish(time, trackName);
+    }
+
+    public void changeBackground(Texture texture) {
+        background = texture;
     }
 
     public void dispose() {
@@ -106,13 +117,17 @@ public class Track {
     }
 
     public void draw(float delta, SpriteBatch spriteBatch) {
+        GameUtils.setColorByDrawDistance(1, spriteBatch);
+        spriteBatch.draw(background, 0, 0);
+        spriteBatch.draw(fade, GameConstants.SCREEN_WIDTH / 2 - 50, GameConstants.SCREEN_HEIGHT / 2 - 50);
+
         float distance = player.getDistance();
         float trackDistance = 1 + (distance % 0.125f);
-        int frame = TOTAL_FRAMES - 1 - (int) ((distance / 0.125f) % TOTAL_FRAMES);
+        int frame = tunnelFrames - 1 - (int) ((distance / 0.125f) % tunnelFrames);
         float scale = 1.6f;
         for (int i = 0; i < 50; i++) {
             Texture texture;
-            if (i % TOTAL_FRAMES == frame) {
+            if (i % tunnelFrames == frame) {
                 texture = tunnel2;
             } else {
                 texture = tunnel1;
@@ -161,4 +176,31 @@ public class Track {
         return bonusFrames;
     }
 
+    protected void setScreen(GameplayScreen screen) {
+        this.screen = screen;
+    }
+    protected void setTimer(int timer) {
+        this.timer = timer;
+    }
+    protected void setTrackName(String trackName) {
+        this.trackName = trackName;
+    }
+    protected List<TrackObject> getObjects() {
+        return objects;
+    }
+    protected List<Racer> getRacers() {
+        return racers;
+    }
+    protected void setPlayer(Player player) {
+        this.player = player;
+    }
+    protected void setTunnel1(Texture tunnel1) {
+        this.tunnel1 = tunnel1;
+    }
+    protected void setTunnel2(Texture tunnel2) {
+        this.tunnel2 = tunnel2;
+    }
+    protected void setTunnelFrames(int tunnelFrames) {
+        this.tunnelFrames = tunnelFrames;
+    }
 }

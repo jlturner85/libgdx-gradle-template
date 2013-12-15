@@ -31,6 +31,7 @@ public class Racer {
     private boolean active;
     private boolean triggered;
     private float triggerDistance;
+    private int fallOff;
 
     private float distance;
     private float speed;
@@ -82,7 +83,7 @@ public class Racer {
     }
 
     public void fallOff() {
-        active = false;
+        fallOff = 1;
     }
 
     public void crash() {
@@ -94,29 +95,16 @@ public class Racer {
     }
 
     public void update(float delta, Player player, List<TrackObject> objects) {
-        if (triggered && active) {
-            nextAction--;
-            speed += acceleration * Math.max(1, speed / topSpeed) * ((topSpeed * boost) - speed);
-            distance += speed / 60f;
-
-            dBoost += GameConstants.D_D_BOOST;
-            if (boost > 1) {
-                boost += dBoost;
-                if (boost < 1) {
-                    boost = 1;
-                    dBoost = 0;
+        if (triggered) {
+            if (fallOff > 0) {
+                speed -= acceleration * 10;
+                distance += speed / 60f;
+                fallOff++;
+                if (speed < 0) {
+                    speed = 0;
+                    angle = 0;
                 }
-            }
 
-            if (action == -1) {
-                spin -= GameConstants.TORQUE;
-                if (spin < -GameConstants.MAX_SPIN) spin = -GameConstants.MAX_SPIN;
-            }
-            if (action == 1) {
-                spin += GameConstants.TORQUE;
-                if (spin > GameConstants.MAX_SPIN) spin = GameConstants.MAX_SPIN;
-            }
-            if (action == 0) {
                 if (spin > 0) {
                     spin -= GameConstants.FRICTION;
                     if (spin < 0) {
@@ -128,31 +116,70 @@ public class Racer {
                         spin = 0;
                     }
                 }
-            }
 
-            angle += spin;
-            while (angle > 180) angle -= 360;
-            while (angle < -180) angle += 360;
+                angle += spin;
+                while (angle > 180) angle -= 360;
+                while (angle < -180) angle += 360;
+            } else if (active) {
+                nextAction--;
+                speed += acceleration * Math.max(1, speed / topSpeed) * ((topSpeed * boost) - speed);
+                distance += speed / 60f;
 
-            if (nextAction <= 0) {
-                action = random.nextInt(3) - 1;
-                nextAction = random.nextInt(40) + 20;
-            }
-
-            for (TrackObject o : objects) {
-                if (o.collide(this)) {
-                    if (o instanceof Boost) {
-                        boost();
-                    } else if (o instanceof MissingTrack) {
-                        //fallOff();
-                    } else if (o instanceof Wall || o instanceof Train) {
-                        crash();
+                dBoost += GameConstants.D_D_BOOST;
+                if (boost > 1) {
+                    boost += dBoost;
+                    if (boost < 1) {
+                        boost = 1;
+                        dBoost = 0;
                     }
                 }
-            }
-            if (collide(player)) {
-                crash();
-                player.crash();
+
+                if (action == -1) {
+                    spin -= GameConstants.TORQUE;
+                    if (spin < -GameConstants.MAX_SPIN) spin = -GameConstants.MAX_SPIN;
+                }
+                if (action == 1) {
+                    spin += GameConstants.TORQUE;
+                    if (spin > GameConstants.MAX_SPIN) spin = GameConstants.MAX_SPIN;
+                }
+                if (action == 0) {
+                    if (spin > 0) {
+                        spin -= GameConstants.FRICTION;
+                        if (spin < 0) {
+                            spin = 0;
+                        }
+                    } else if (spin < 0) {
+                        spin += GameConstants.FRICTION;
+                        if (spin > 0) {
+                            spin = 0;
+                        }
+                    }
+                }
+
+                angle += spin;
+                while (angle > 180) angle -= 360;
+                while (angle < -180) angle += 360;
+
+                if (nextAction <= 0) {
+                    action = random.nextInt(3) - 1;
+                    nextAction = random.nextInt(40) + 20;
+                }
+
+                for (TrackObject o : objects) {
+                    if (o.collide(this)) {
+                        if (o instanceof Boost) {
+                            boost();
+                        } else if (o instanceof MissingTrack) {
+                            fallOff();
+                        } else if (o instanceof Wall || o instanceof Train) {
+                            crash();
+                        }
+                    }
+                }
+                if (collide(player)) {
+                    crash();
+                    player.crash();
+                }
             }
         } else if (player.getDistance() >= triggerDistance) {
             triggered = true;
@@ -163,8 +190,9 @@ public class Racer {
         if (active) {
             float drawDistance = (float)Math.pow(2 , playerDistance - (distance));
             GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
-            spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
-                    25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, drawDistance, drawDistance, angle, 0, 0, 50, 50, false, false);
+            spriteBatch.draw(texture, GameConstants.SCREEN_WIDTH / 2 - 25, 15 - (float)Math.pow(fallOff, 1.55),
+                    25, GameConstants.SCREEN_HEIGHT / 2 - 15 + (float)Math.pow(fallOff, 1.55), 50, 50,
+                    drawDistance * (float)Math.pow(0.975f, fallOff), drawDistance* (float)Math.pow(0.975f, fallOff), angle, 0, 0, 50, 50, false, false);
         }
     }
 

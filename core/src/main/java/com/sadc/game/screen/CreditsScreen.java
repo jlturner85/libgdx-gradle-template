@@ -64,7 +64,7 @@ public class CreditsScreen extends GameScreen {
         creditFont.draw(spriteBatch, "Fernando Mosqueda - Artist", creditXPosition, creditHeight);
         creditFont.draw(spriteBatch, "Gerald Halbeisen - Artist/Programmer", creditXPosition, creditHeight - 35);
         creditFont.draw(spriteBatch, "Justin Turner - Programmer", creditXPosition, creditHeight - 70);
-        creditFont.draw(spriteBatch, "Tom Farello - Programmer", creditXPosition, creditHeight - 105);
+        creditFont.draw(spriteBatch, "Tom Farello - Programmer/Level Design", creditXPosition, creditHeight - 105);
         creditFont.draw(spriteBatch, "Danny Carroll, Darren Danvers - Game Jam Theme", creditXPosition, creditHeight - 140);
         creditFont.draw(spriteBatch, "Perturbator - Music", creditXPosition, creditHeight - 175);
         creditFont.draw(spriteBatch, "Game Jam Theme - London Underground", creditXPosition, creditHeight - 210);

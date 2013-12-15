@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.sadc.game.GameConstants;
 import com.sadc.game.gameobject.GameUtils;
 import com.sadc.game.gameobject.Track;
+import com.sadc.game.gameobject.tracks.TrackOne;
 import com.sadc.game.gameobject.tracks.TrackTwo;
 
 public class GameplayScreen extends GameScreen{
@@ -37,7 +38,11 @@ public class GameplayScreen extends GameScreen{
         kphFont = generator.generateFont(32);
         timerFont = generator.generateFont(56);
 
-        track = new TrackTwo(this);
+        if (GameConstants.CURRENT_SELECTED_LEVEL == 0) {
+            track = new TrackOne(this);
+        } else if (GameConstants.CURRENT_SELECTED_LEVEL == 1) {
+            track = new TrackTwo(this);
+        }
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
         hitSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hit.wav"));
     }

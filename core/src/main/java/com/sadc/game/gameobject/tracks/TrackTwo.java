@@ -138,6 +138,8 @@ public class TrackTwo extends Track {
 
         objects.add(new Boost(205, 180));
         objects.add(new Train(212.5f, 3));
+        objects.add(new Wall(215, -105));
+        objects.add(new Wall(218, -145));
 
         racers.add(new Racer(220, 0));
         objects.add(new Boost(220, 180));
@@ -271,12 +273,9 @@ public class TrackTwo extends Track {
         racers.add(new Racer(512.5f, 180));
         objects.add(new Boost(510, -90));
 
-        objects.add(new Boost(520, 120));
-        objects.add(new Boost(520, -120));
-        objects.add(new Boost(522, 90));
-        objects.add(new Boost(522, -90));
-        objects.add(new Boost(524, 60));
-        objects.add(new Boost(524, -60));
+        objects.add(new Boost(515, 120));
+        objects.add(new Boost(515, -120));
+        objects.add(new Train(515, 5));
 
         objects.add(new MissingTrack(525, 100, MissingTrack.TOP));
         racers.add(new Racer(530, 80));

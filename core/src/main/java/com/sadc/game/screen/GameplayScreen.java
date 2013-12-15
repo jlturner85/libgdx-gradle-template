@@ -4,15 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.sadc.game.GameConstants;
-import com.sadc.game.gameobject.Player;
 import com.sadc.game.gameobject.Track;
 
 public class GameplayScreen extends GameScreen{
 
     private final SpriteBatch spriteBatch;
+
+    private final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT));
+    private BitmapFont kphFont;
+    private BitmapFont timeFont;
+    private BitmapFont timerFont;
 
     private boolean paused;
     private Sound explosionSound;
@@ -26,7 +31,11 @@ public class GameplayScreen extends GameScreen{
         GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("gameplaymusic1.mp3"));
         long id = GameConstants.currentMusic.play(0.05f);
         GameConstants.currentMusic.setLooping(id, true);
+
         spriteBatch = new SpriteBatch();
+        kphFont = generator.generateFont(32);
+        timeFont = generator.generateFont(20);
+        timerFont = generator.generateFont(56);
 
         track = new Track();
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/explosion.wav"));
@@ -35,6 +44,7 @@ public class GameplayScreen extends GameScreen{
 
     @Override
     public void dispose() {
+        generator.dispose();
         spriteBatch.dispose();
         explosionSound.dispose();
         hitSound.dispose();
@@ -66,6 +76,12 @@ public class GameplayScreen extends GameScreen{
             spriteBatch.begin();
             spriteBatch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             track.draw(delta, spriteBatch);
+            kphFont.draw(spriteBatch, (int)(track.getPlayer().getSpeed() * 40) + " KMH", 15, 50);
+            long time = track.getPlayer().getTime();
+            int seconds = (int)(time % 3600) / 60;
+            int millis = (int)(time % 60) * 100 / 60;
+            timeFont.draw(spriteBatch, time / 3600 + ":" + (seconds < 10 ? "0" : "") +
+                    seconds + "." + (millis < 10 ? "0" : "") + millis , 550, 450);
             spriteBatch.end();
         }
     }

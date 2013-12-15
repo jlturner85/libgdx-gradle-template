@@ -9,28 +9,29 @@ import com.sadc.game.util.GameUtil;
 /**
  * @author f536985 (Tom Farello)
  */
-public class Boost extends TrackObject {
+public class Wall extends TrackObject {
 
-    public Boost(float distance, float angle) {
+    public Wall(float distance, float angle) {
         setActive(true);
         setDistance(distance);
         setAngle(angle);
-        setWidth(15);
-        setTexture(new Texture("boostpanel.png"));
+        setWidth(22);
+        setTexture(new Texture("brickWall.png"));
     }
 
+    @Override
     public void update(float delta, Player player) {
         if (collide(player)) {
-            player.boost();
+            player.crash();
             setActive(false);
         }
     }
 
+    @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
         float drawDistance = (float)Math.pow(2 , playerDistance - (getDistance()));
         GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
-        spriteBatch.draw(getTexture(), GameConstants.SCREEN_WIDTH / 2 - 30, 15,
-                30, GameConstants.SCREEN_HEIGHT / 2 - 15, 60, 60, drawDistance, drawDistance, getAngle(), 0, 0, 60, 60, false, false);
+        spriteBatch.draw(getTexture(), GameConstants.SCREEN_WIDTH / 2 - 50, 15,
+                50, GameConstants.SCREEN_HEIGHT / 2 - 15, 100, 70, drawDistance, drawDistance, getAngle(), 0, 0, 100, 70, false, false);
     }
-
 }

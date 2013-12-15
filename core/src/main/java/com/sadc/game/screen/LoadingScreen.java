@@ -9,12 +9,6 @@ import com.sadc.game.GameConstants;
 import java.lang.reflect.Constructor;
 
 /**
- * Created with IntelliJ IDEA.
- * Copyright (c) 2013 HEB
- * All rights reserved.
- * <p/>
- * Class Description:
- *
  * @author Justin Turner (t590035)
  *         Date: 12/13/13
  */

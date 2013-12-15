@@ -1,12 +1,3 @@
-/*
- * $Id$
- *
- * Copyright (c) 2013 HEB
- * All rights reserved.
- *
- * This software is the confidential and proprietary information
- * of HEB.
- */
 package com.sadc.game.gameobject.trackobject;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -35,8 +26,9 @@ public abstract class TrackObject {
     public abstract void draw(float delta, float playerDistance, SpriteBatch spriteBatch);
 
     public boolean collide(Player player) {
-        return active && (Math.abs(distance - player.getDistance()) < player.getSpeed() / 25f &&
-                Math.abs(angle - player.getAngle()) % 360 < width);
+        float angleDiff = Math.abs(angle - player.getAngle()) % 360;
+        return active && (Math.abs(distance - player.getDistance()) < (player.getSpeed() + 1) / 70f &&
+                (angleDiff < width || angleDiff > 360 - width));
     }
 
     protected boolean isActive() {

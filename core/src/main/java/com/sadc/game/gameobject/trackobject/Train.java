@@ -14,6 +14,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
+import com.sadc.game.animation.Animator;
 import com.sadc.game.gameobject.GameUtils;
 import com.sadc.game.gameobject.Player;
 import com.sadc.game.gameobject.Racer;
@@ -37,6 +38,10 @@ public class Train extends TrackObject {
     private Texture insideTexture;
     private Texture middleTexture;
     private Texture lightsTexture;
+    private Texture explosionTexture = new Texture("trainExplosion_12frame.png");
+    private Animator explosionAnimator = new Animator(explosionTexture, 3, 4, 0.5f);
+
+    private int explode;
 
     public Train(float distance, int numCars) {
         setActive(true);
@@ -44,6 +49,7 @@ public class Train extends TrackObject {
         setAngle(0);
         setWidth(100);
         triggerDistance = distance - 10;
+        explode = 0;
 
         this.numCars = numCars;
         frontTexture = new Texture("kickAssTrain.png");
@@ -73,10 +79,15 @@ public class Train extends TrackObject {
         frontTexture.dispose();
         insideTexture.dispose();
         middleTexture.dispose();
+        explosionTexture.dispose();
+        explosionAnimator.dispose();
     }
 
     @Override
     public void update(float delta, Player player) {
+        if (explode > 0) {
+            explode --;
+        }
         if (triggered) {
             float speed = Math.max(0, 5 - player.getSpeed());
             setDistance(getDistance() - (speed / 60f));
@@ -86,6 +97,7 @@ public class Train extends TrackObject {
                 trainSound.stop();
                 trainWhistle.stop();
                 explosionSound.play();
+                explode = 240;
             }
         } else if (player.getDistance() >= triggerDistance) {
             triggered = true;
@@ -94,6 +106,11 @@ public class Train extends TrackObject {
 
     @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
+        if (explode > 0) {
+            GameUtils.setColorByDrawDistance(1, spriteBatch);
+            explosionAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
+                    175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, 1, 1, 0);
+        }
         if (isActive()) {
             for (int i = numCars - 1; i >= 0; i--) {
                 float distance = getDistance() + 2 * i;

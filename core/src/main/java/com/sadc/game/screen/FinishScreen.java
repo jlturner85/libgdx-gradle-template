@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class FinishScreen extends GameScreen {
     private String successText = "Quite Good!";
-    private String failText = "Bollocks, you are terrible.";
+    private String failText = "Bollocks, you are just awful.";
     private String recordText = "Jolly good! You set a record! Enter your initials.";
     private String initials = "";
     private String finishTimeString;
@@ -56,7 +56,7 @@ public class FinishScreen extends GameScreen {
         font = generator.generateFont(GameConstants.MENU_FONT_SIZE);
         if (!success){
             textToDisplay = failText;
-        } if (recordSet) {
+        } else if (recordSet) {
             textToDisplay = recordText;
         } else {
             textToDisplay = successText;

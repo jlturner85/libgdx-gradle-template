@@ -37,10 +37,8 @@ public class TrackThree extends Track {
         List<TrackObject> objects = getObjects();
         List<Racer> racers = getRacers();
 
-        objects.add(new Checkpoint(150, 1800));
-        objects.add(new Checkpoint(300, 1800));
-        objects.add(new Checkpoint(500, 1800));
-        objects.add(new Checkpoint(700)); // finish line
+        objects.add(new Checkpoint(150, 1200));
+        objects.add(new Checkpoint(210)); // finish line
 
         racers.add(new Racer(15, 0));
         racers.add(new Racer(16, 30));
@@ -221,5 +219,144 @@ public class TrackThree extends Track {
         racers.add(new Racer(137, -135));
         racers.add(new Racer(138, 90));
         racers.add(new Racer(139, -90));
+
+        // checkpoint
+
+        objects.add(new Wall(160, 30));
+        objects.add(new Wall(160, 60));
+        objects.add(new Wall(160, 90));
+        objects.add(new Wall(160, 120));
+        objects.add(new Wall(160, 150));
+        objects.add(new Wall(160, 180));
+        objects.add(new Wall(160, -150));
+        objects.add(new Wall(160, -120));
+        objects.add(new Wall(160, -90));
+        objects.add(new Wall(160, -60));
+        objects.add(new Wall(160, -30));
+
+        objects.add(new Wall(160.5f, -60));
+        objects.add(new Wall(161, -75));
+        objects.add(new Wall(161.5f, -90));
+        objects.add(new Wall(161.5f, 0));
+        objects.add(new Wall(162, -105));
+        objects.add(new Wall(162, -15));
+        objects.add(new Wall(162.5f, -120));
+        objects.add(new Wall(162.5f, -30));
+        objects.add(new Wall(163, -135));
+        objects.add(new Wall(163, -45));
+        objects.add(new Wall(163.5f, -150));
+        objects.add(new Wall(163.5f, -60));
+        objects.add(new Wall(164, -165));
+        objects.add(new Wall(164, -75));
+        objects.add(new Wall(164.5f, 180));
+        objects.add(new Wall(164.5f, -90));
+        objects.add(new Wall(165, -105));
+        objects.add(new Wall(165.5f, -120));
+        objects.add(new Wall(166, 135));
+        objects.add(new Wall(166, -135));
+        objects.add(new Wall(166.5f, 135));
+        objects.add(new Wall(166.5f, -135));
+        objects.add(new Wall(167, 120));
+        objects.add(new Wall(167.5f, 105));
+        objects.add(new Wall(168, 90));
+        objects.add(new Wall(168, 180));
+        objects.add(new Wall(168.5f, 75));
+        objects.add(new Wall(168.5f, 165));
+        objects.add(new Wall(169, 60));
+        objects.add(new Wall(169, 150));
+        objects.add(new Wall(169.5f, 45));
+        objects.add(new Wall(169.5f, 135));
+        objects.add(new Wall(170, 30));
+        objects.add(new Wall(170, 120));
+        objects.add(new Wall(170.5f, 15));
+        objects.add(new Wall(170.5f, 105));
+        objects.add(new Wall(171, 0));
+        objects.add(new Wall(171, 90));
+        objects.add(new Wall(171.5f, 75));
+        objects.add(new Wall(172, 60));
+        objects.add(new Wall(172.5f, -45));
+        objects.add(new Wall(172.5f, 45));
+        objects.add(new Boost(172.5f, 0));
+
+        objects.add(new Wall(160.5f, 60));
+        objects.add(new Wall(161, 75));
+        objects.add(new Wall(161.5f, 90));
+        objects.add(new Wall(161.5f, -0));
+        objects.add(new Wall(162, 105));
+        objects.add(new Wall(162, 15));
+        objects.add(new Wall(162.5f, 120));
+        objects.add(new Wall(162.5f, 30));
+        objects.add(new Wall(163, 135));
+        objects.add(new Wall(163, 45));
+        objects.add(new Wall(163.5f, 150));
+        objects.add(new Wall(163.5f, 60));
+        objects.add(new Wall(164, 165));
+        objects.add(new Wall(164, 75));
+        objects.add(new Wall(164.5f, 180));
+        objects.add(new Wall(164.5f, 90));
+        objects.add(new Wall(165, 105));
+        objects.add(new Wall(165.5f, 120));
+        objects.add(new Wall(166, -135));
+        objects.add(new Wall(166, 135));
+        objects.add(new Wall(166.5f, -135));
+        objects.add(new Wall(166.5f, 135));
+        objects.add(new Wall(167, -120));
+        objects.add(new Wall(167.5f, -105));
+        objects.add(new Wall(168, -90));
+        objects.add(new Wall(168, 180));
+        objects.add(new Wall(168.5f, -75));
+        objects.add(new Wall(168.5f, -165));
+        objects.add(new Wall(169, -60));
+        objects.add(new Wall(169, -150));
+        objects.add(new Wall(169.5f, -45));
+        objects.add(new Wall(169.5f, -135));
+        objects.add(new Wall(170, -30));
+        objects.add(new Wall(170, -120));
+        objects.add(new Wall(170.5f, -15));
+        objects.add(new Wall(170.5f, -105));
+        objects.add(new Wall(171, 0));
+        objects.add(new Wall(171, -90));
+        objects.add(new Wall(171.5f, -75));
+        objects.add(new Wall(172, -60));
+
+        objects.add(new Boost(166, 180));
+
+        objects.add(new Train(185, 3));
+        objects.add(new Wall(182, 180));
+        objects.add(new Wall(182, 150));
+        objects.add(new Wall(182, -150));
+
+        objects.add(new Boost(185, 180));
+        objects.add(new Wall(186, 180));
+        objects.add(new Boost(187, 120));
+        objects.add(new Boost(187, -120));
+        objects.add(new Wall(188, 120));
+        objects.add(new Wall(188, -120));
+        objects.add(new Boost(189, 120));
+        objects.add(new Boost(189, -120));
+        objects.add(new Wall(190, 60));
+        objects.add(new Wall(190, -60));
+        objects.add(new Boost(191, 0));
+        objects.add(new Wall(192, 0));
+
+        objects.add(new Train(200,5));
+        objects.add(new Wall(195, 90));
+        objects.add(new Wall(195, -90));
+        objects.add(new Wall(195, 180));
+        objects.add(new Wall(198, 45));
+        objects.add(new Wall(198, -45));
+        objects.add(new Wall(198, 135));
+        objects.add(new Wall(198, -135));
+        objects.add(new Wall(201, 90));
+        objects.add(new Wall(201, -90));
+        objects.add(new Wall(201, 180));
+        objects.add(new Wall(204, 45));
+        objects.add(new Wall(204, -45));
+        objects.add(new Wall(204, 135));
+        objects.add(new Wall(204, -135));
+        objects.add(new Boost(207, 0));
+        objects.add(new Wall(207, 90));
+        objects.add(new Wall(207, -90));
+        objects.add(new Wall(207, 180));
     }
 }

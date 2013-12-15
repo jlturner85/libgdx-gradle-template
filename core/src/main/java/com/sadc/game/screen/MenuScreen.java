@@ -58,7 +58,7 @@ public class MenuScreen  extends GameScreen{
         lightPole = new Texture("lightPole.png");
         skyLine = new Texture("slyline.png");
         sky = new Texture("datNightSky.png");
-        moon = new Texture("moonY.png");
+        moon = new Texture("glowMoon.png");
         cloud1 = new Texture("cloud1.png");
         cloud2 = new Texture("cloud2.png");
         cloud3 = new Texture("cloud3.png");
@@ -125,7 +125,7 @@ public class MenuScreen  extends GameScreen{
                     } else if ((p1Down && !oldP1Down) || (p2Down && !oldP2Down)) {
                         leaderboardHighlighted();
                     } else if ((p1Enter && !GameConstants.OLD_P1_ENTER_PRESSED) || (p2Enter && !GameConstants.OLD_P2_ENTER_PRESSED)) {
-                        this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.GameplayScreen");
+                        this.nextGameScreen = new LoadingScreen("com.sadc.game.screen.CarSelectScreen");
                         this.screenDone = true;
                     }
                     break;

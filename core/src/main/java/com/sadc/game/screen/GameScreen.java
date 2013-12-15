@@ -2,6 +2,7 @@ package com.sadc.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -22,6 +23,7 @@ public abstract class GameScreen implements Screen {
     public GameScreen getNextGameScreen() {
         return nextGameScreen;
     }
+    private Texture box = new Texture("rectangle.png");
     private SpriteBatch spriteBatch = new SpriteBatch();
     private BitmapFont font = new FreeTypeFontGenerator(Gdx.files.internal(GameConstants.LONDON_FONT)).generateFont(20);
     public abstract void update(float delta);
@@ -91,8 +93,9 @@ public abstract class GameScreen implements Screen {
 
     public void drawPause(){
         spriteBatch.begin();
-        font.draw(spriteBatch, "Paused", 60, 450);
-        font.draw(spriteBatch, "Return to Menu", 60, 400);
+        spriteBatch.draw(box, 200, 125, 200, 200);
+        font.draw(spriteBatch, "Paused", 265, 275);
+        font.draw(spriteBatch, "Return to Menu", 230, 225);
         spriteBatch.end();
     }
 

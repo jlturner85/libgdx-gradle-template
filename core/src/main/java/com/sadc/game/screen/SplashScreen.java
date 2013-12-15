@@ -19,7 +19,7 @@ public class SplashScreen extends GameScreen {
         GameConstants.currentMusic = Gdx.audio.newSound(Gdx.files.internal("menu.mp3"));
         long id = GameConstants.currentMusic.play(GameConstants.MUSIC_VOLUME);
         GameConstants.currentMusic.setLooping(id, true);
-        splashScreenTime = 2;
+        splashScreenTime = 5;
         spriteBatch = new SpriteBatch();
         background = new Texture("seems-legit-tunnel.jpg");
         Timer.schedule(new Timer.Task() {

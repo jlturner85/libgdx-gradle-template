@@ -56,4 +56,7 @@ public class GameConstants {
     public static final String TRACK_1_NAME = "Track 1";
     public static final String[] INITIAL_CHARACTER_ARRAY= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
             , "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    public static final int CAR1_SPRITE_ROWS = 2;
+    public static final int CAR1_SPRITE_COLUMNS = 2;
+    public static final float CAR1_FRAME_DURATION = 0.1f;
 }

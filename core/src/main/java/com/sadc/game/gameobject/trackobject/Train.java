@@ -14,15 +14,14 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
+import com.sadc.game.gameobject.GameUtils;
 import com.sadc.game.gameobject.Player;
-import com.sadc.game.util.GameUtil;
 
 /**
  * @author f536985 (Tom Farello)
  */
 public class Train extends TrackObject {
 
-    private int timeout;
     private int numCars;
     private Sound trainSound = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-pass-by-01.mp3"));
     private Sound trainWhistle = Gdx.audio.newSound(Gdx.files.internal("soundeffects/train-whistle-01.mp3"));
@@ -45,6 +44,14 @@ public class Train extends TrackObject {
     }
 
     @Override
+    public boolean collide(Player player) {
+        float angleDiff = Math.abs(getAngle() - player.getAngle()) % 360;
+        return isActive() && ((Math.abs(getDistance() - player.getDistance()) < (player.getSpeed() + 1) / 70f ||
+                (player.getDistance() - getDistance() > 0 && player.getDistance() - getDistance() < 2 * numCars)) &&
+                (angleDiff < getWidth() || angleDiff > 360 - getWidth()));
+    }
+
+    @Override
     public void dispose() {
         frontTexture.dispose();
         insideTexture.dispose();
@@ -55,35 +62,29 @@ public class Train extends TrackObject {
     public void update(float delta, Player player) {
         setDistance(getDistance() - 1f / 120f);
         if (collide(player)) {
-            player.crash();
-            setActive(false);
-            timeout = 240;
+            player.crash(240);
+            this.dispose();
         }
     }
 
     @Override
     public void draw(float delta, float playerDistance, SpriteBatch spriteBatch) {
-        if (timeout > 0) {
-            timeout--;
-        } else {
-            setActive(true);
-        }
         for (int i = numCars - 1; i >= 0; i--) {
             float distance = getDistance() + 2 * i;
             float drawDistance = (float)Math.pow(2 , playerDistance - (distance + 4f / 3));
-            GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
+            GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
             if (drawDistance <= 1) {
                 spriteBatch.draw(insideTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
                         175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
             }
             drawDistance = (float)Math.pow(2 , playerDistance - distance);
-            GameUtil.setColorByDrawDistance(drawDistance, spriteBatch);
+            GameUtils.setColorByDrawDistance(drawDistance, spriteBatch);
             if (drawDistance <= 1) {
                 spriteBatch.draw(i == 0 ? frontTexture : middleTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
                         175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);
             }
             if (i == 0) {
-                GameUtil.setColorByDrawDistance(1, spriteBatch);
+                GameUtils.setColorByDrawDistance(1, spriteBatch);
                 if (drawDistance <= 1) {
                     spriteBatch.draw(lightsTexture, GameConstants.SCREEN_WIDTH / 2 - 175, 15,
                             175, GameConstants.SCREEN_HEIGHT / 2 - 15, 350, 350, drawDistance, drawDistance, getAngle(), 0, 0, 350, 350, false, false);

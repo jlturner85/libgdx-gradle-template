@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sadc.game.GameConstants;
 import com.sadc.game.animation.Animator;
-import com.sadc.game.util.GameUtil;
 
 /**
  * Fuck Javadocs.
@@ -24,6 +23,8 @@ public class Player {
 //    private static final int WALK_SPRITE_ROWS = 5;
 //    private static final int WALK_SPRITE_COLUMNS = 6;
 //    private static final float WALK_FRAME_DURATION = 0.07f;
+
+    private Track track;
 
     private Sound idleSound;
     private Sound firstGearSound;
@@ -43,6 +44,7 @@ public class Player {
 
     private float boost;
     private float dBoost;
+
     private int timeout;
 
     private int leftKey;
@@ -57,7 +59,9 @@ public class Player {
 //    private Texture walkerTexture;
 //    private Animator walkerAnimator;
 
-    public Player(int playerNum) {
+    public Player(int playerNum, Track track) {
+        this.track = track;
+
         distance = 0;
         speed = 0;
         topSpeed = 5;
@@ -100,12 +104,24 @@ public class Player {
     }
 
     public void crash() {
-        timeout = 120;
+        crash(120);
+    }
+
+    public void crash(int timeout) {
+        this.timeout = timeout;
         speed = 0;
         angle = 0;
         spin = 0;
         boost = 1;
         dBoost = 0;
+    }
+
+    public void bonusTime(int bonusFrames) {
+        track.bonusTime(bonusFrames);
+    }
+
+    public void finish() {
+        track.finish();
     }
 
     public void dispose() {
@@ -175,7 +191,7 @@ public class Player {
 
     public void draw (float delta, SpriteBatch spriteBatch) {
         if (timeout <= 0) {
-            GameUtil.setColorByDrawDistance(1, spriteBatch);
+            GameUtils.setColorByDrawDistance(1, spriteBatch);
             carAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
                     25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);//, 0, 0, 50, 50, false, false);
 //            walkerAnimator.draw(spriteBatch, 50,50);

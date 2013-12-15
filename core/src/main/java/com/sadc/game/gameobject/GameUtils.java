@@ -2,6 +2,7 @@ package com.sadc.game.gameobject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
@@ -40,5 +41,24 @@ public class GameUtils {
         output = output.substring(0, output.length() - 1);
         FileHandle leaderboardFile = Gdx.files.local(leaderboardTextFileName);
         leaderboardFile.writeString(output, false);
+    }
+
+    public static String framesToTimeString(long frames) {
+        int seconds = (int)(frames % 3600) / 60;
+        int millis = (int)(frames % 60) * 100 / 60;
+        return frames / 3600 + ":" + (seconds < 10 ? "0" : "") + seconds + "." + (millis < 10 ? "0" : "") + millis;
+    }
+
+    public static float setColorByDrawDistance(float drawDistance, SpriteBatch spriteBatch) {
+        float color = 1;
+        if (drawDistance < 0.23f) {
+            color = (drawDistance - 0.03f) * 5;
+            if (color < 0) {
+                color = 0;
+            }
+        }
+        spriteBatch.setColor(color, color, color, 1);
+        //spriteBatch.setColor(color, color, color, 1);
+        return color;
     }
 }

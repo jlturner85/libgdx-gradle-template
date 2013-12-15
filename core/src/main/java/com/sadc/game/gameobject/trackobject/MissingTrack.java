@@ -30,7 +30,7 @@ public class MissingTrack extends TrackObject {
         setActive(true);
         setDistance(distance);
         setAngle(90 * side - 270);
-        setWidth(90);
+        setWidth(85);
 
         this.length = length;
         this.side = side;

@@ -132,6 +132,10 @@ public class Player {
         track.finish();
     }
 
+    public void changeBackground(Texture texture) {
+        track.changeBackground(texture);
+    }
+
     public void dispose() {
         texture.dispose();
 //        walkerTexture.dispose();
@@ -145,13 +149,12 @@ public class Player {
     public void update(float delta) {
         time++;
         if (fallOff > 0) {
-            speed -= acceleration * 10;
-            distance += speed / 60f;
-            fallOff++;
+            speed -= acceleration * 20;
             if (speed < 0) {
                 speed = 0;
-                angle = 0;
             }
+            distance += speed / 60f;
+            fallOff++;
 
             if (spin > 0) {
                 spin -= GameConstants.FRICTION;
@@ -168,9 +171,7 @@ public class Player {
             angle += spin;
             while (angle > 180) angle -= 360;
             while (angle < -180) angle += 360;
-        }
-        if (timeout <= 0) {
-            fallOff = 0;
+        } else if (timeout <= 0) {
             if (Gdx.input.isKeyPressed(brakeKey)) {
                 speed -= acceleration * 35;
                 if (speed < 0) {
@@ -218,9 +219,12 @@ public class Player {
             angle += spin;
             while (angle > 180) angle -= 360;
             while (angle < -180) angle += 360;
-        } else {
+        }
+        if (timeout > 0) {
             timeout--;
             if (timeout == 0) {
+                speed = 0;
+                fallOff = 0;
                 angle = 0;
                 spin = 0;
                 boost = 1;
@@ -232,6 +236,7 @@ public class Player {
 
     public void draw (float delta, SpriteBatch spriteBatch) {
         if (explosion) {
+            GameUtils.setColorByDrawDistance(1, spriteBatch);
             explosionAnimator.draw(spriteBatch, GameConstants.SCREEN_WIDTH / 2 - 25, 15,
                     25, GameConstants.SCREEN_HEIGHT / 2 - 15, 50, 50, 1, 1, angle);
         } else {
